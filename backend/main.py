@@ -548,7 +548,27 @@ def admin_verify_endpoint(token: str):
         return {"valid": True}
     return {"valid": False}
 
+# --- SINGLE SERVICE FULL-STACK DEPLOYMENT (Serve React Frontend Dist) ---
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+dist_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "dist")
+if os.path.exists(dist_dir):
+    assets_dir = os.path.join(dist_dir, "assets")
+    if os.path.exists(assets_dir):
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+
+    @app.get("/{full_path:path}")
+    def serve_react_app(full_path: str):
+        if full_path.startswith("api/"):
+            raise HTTPException(status_code=404, detail="API endpoint not found")
+        target_file = os.path.join(dist_dir, full_path)
+        if os.path.exists(target_file) and os.path.isfile(target_file):
+            return FileResponse(target_file)
+        return FileResponse(os.path.join(dist_dir, "index.html"))
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
+
 
