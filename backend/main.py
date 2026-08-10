@@ -48,6 +48,8 @@ app = FastAPI(
     description="FastAPI & SQLite Backend for WDC AI Concierge & Admin Panel with Full CRUD"
 )
 
+from fastapi.middleware.gzip import GZipMiddleware
+
 # CORS middleware setup for React frontend
 app.add_middleware(
     CORSMiddleware,
@@ -56,6 +58,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Gzip Compression Middleware for 5x faster network transfers
+app.add_middleware(GZipMiddleware, minimum_size=500)
 
 # --- Pydantic Models ---
 
