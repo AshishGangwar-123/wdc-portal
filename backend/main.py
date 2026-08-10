@@ -137,21 +137,14 @@ class TestSubmitRequest(BaseModel):
 
 @app.get("/")
 def read_root():
+    dist_index = os.path.join(os.path.dirname(os.path.dirname(__file__)), "dist", "index.html")
+    if os.path.exists(dist_index):
+        return FileResponse(dist_index)
     return {
         "status": "online",
         "club": "Web Development Club (WDC)",
-        "database": "SQLite (wdc_portal.db)",
-        "version": "3.0",
-        "endpoints": {
-            "agent_chat": "POST /api/agent/chat",
-            "workshops": "GET/POST /api/workshops",
-            "delete_workshop": "DELETE /api/workshops/{id}",
-            "notifications": "GET/POST /api/notifications",
-            "delete_notification": "DELETE /api/notifications/{id}",
-            "students": "GET /api/students",
-            "register": "POST /api/students/register",
-            "stats": "GET /api/stats",
-        }
+        "database": "Neon PostgreSQL",
+        "version": "3.0"
     }
 
 @app.post("/api/agent/chat")
