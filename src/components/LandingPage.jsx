@@ -18,6 +18,7 @@ const LinkedInIcon = ({ size = 14, color = 'currentColor' }) => (
 );
 import FloatingCodeElements from './FloatingCodeElements';
 import AIConciergeWidget from './AIConciergeWidget';
+import AuraFloatingAvatar from './AuraFloatingAvatar';
 import MediaGalleryBox from './MediaGalleryBox';
 import TeamDeck3D from './TeamDeck3D';
 
@@ -59,6 +60,7 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
   const ctaRef          = useRef(null);
 
   const [dbWorkshops, setDbWorkshops] = useState([]);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   // Fetch live workshops from backend DB (relative URL — works both local & deployed)
   useEffect(() => {
@@ -411,14 +413,15 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
         </div>
 
         {/* Right Column — AI Concierge Widget & GSAP Animated Media Showcase */}
-        <div id="ai-concierge" ref={heroRightRef} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', paddingTop: '4px', width: '100%' }}>
+        <div id="ai-concierge" ref={heroRightRef} style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative", paddingTop: "4px", width: "100%" }}>
           {/* Decorative glow behind widget */}
           <div style={{
             position: 'absolute', inset: '-40px',
             background: 'radial-gradient(ellipse at center, rgba(0,242,254,0.12) 0%, transparent 70%)',
             pointerEvents: 'none', zIndex: 0,
           }} />
-          <AIConciergeWidget isSiteLoaded={isSiteLoaded} />
+          <AuraFloatingAvatar isSiteLoaded={isSiteLoaded} onOpenChat={() => setIsChatOpen(true)} />
+          <AIConciergeWidget isSiteLoaded={isSiteLoaded} isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
           <MediaGalleryBox />
         </div>
       </section>

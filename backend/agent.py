@@ -1,57 +1,72 @@
 import os
-import sys
-import json
 import re
-sys.path.append(os.path.dirname(__file__))
-
+import requests
 from dotenv import load_dotenv
-from database import (
-    get_all_notifications,
-    get_workshop_by_id,
-    get_all_workshops,
-    get_all_students,
-    get_club_stats
-)
 
-load_dotenv()
+env_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv(env_path)
+
+from database import get_all_workshops, get_all_notifications, get_all_students, get_club_stats
 
 def detect_language(text: str) -> str:
-    """
-    Detects user input language mode:
-    - 'hi_devanagari': Devanagari Hindi script (हिंदी, वर्कशॉप, फॉर्म, etc.)
-    - 'en': Pure English query (When is, show me, list, upcoming, register)
-    - 'hinglish': Roman script Hindi / Hinglish (kab, batao, dikhao, karna hai, saari)
-    """
-    # 1. Devanagari script detection
     if re.search(r'[\u0900-\u097F]', text):
-        return "hi_devanagari"
+        return 'hi_devanagari'
+    hindi_keywords = ['kya', 'hai', 'kaise', 'kab', 'kon', 'mujhe', 'batao', 'karo', 'hain', 'me', 'mein', 'ko', 'se', 'pe', 'namaste', 'ji', 'hun', 'bataiye']
+    words = text.lower().split()
+    if any(w in hindi_keywords for w in words):
+        return 'hinglish'
+    return 'en'
+import requests
+
+import requests
+import re
+
+def call_claude_genai(user_name: str, query: str, lang: str) -> str:
+    """
+    Intelligent GenAI fallback for general questions (programming, AI, science, general knowledge, etc.)
+    Uses Sarvam LLM / Anthropic with warm conversational personality as AURA.
+    """
+    sarvam_key = os.getenv("SARVAM_API_KEY", "sk_sidxcigm_OFeYUco9TRvH0L7dJ56UxAs6").strip()
     
-    q = text.lower()
-    
-    # 2. English signature words
-    en_words = [
-        "when", "what", "how", "show", "list", "upcoming", "register",
-        "schedule", "tell", "who", "where", "is", "are", "can", "details",
-        "about", "events", "workshops", "notifications", "course", "courses"
-    ]
-    en_score = sum(1 for w in en_words if w in q)
-    
-    # 3. Hinglish signature words
-    hi_words = [
-        "kab", "batao", "dikhao", "karo", "hai", "kya", "kaise", "karna",
-        "kahan", "aap", "mai", "mujhe", "chahiye", "nahi", "haan", "saari",
-        "kitni", "bhi", "par", "ko", "baare", "puch"
-    ]
-    hi_score = sum(1 for w in hi_words if w in q)
-    
-    if hi_score > en_score:
-        return "hinglish"
-    elif en_score > 0 and hi_score == 0:
-        return "en"
-    elif hi_score > 0:
-        return "hinglish"
-    
-    return "hinglish"
+    system_prompt = f"""You are AURA, the intelligent AI Concierge & Assistant for Web Development Club (WDC) at Rajkiya Engineering College Banda (RECB), Uttar Pradesh.
+You answer ANY general questions (coding, AI, programming, science, general knowledge, tech, career, etc.) intelligently, accurately, and politely.
+User's name: {user_name}. Always address the user warmly.
+Language preference: {lang}. If Hinglish/Hindi, reply in friendly Hinglish/Hindi. If Devanagari Hindi, reply in natural Devanagari Hindi. If English, reply in clear English.
+Keep responses concise (2-4 sentences max), conversational, and polite. Do NOT use markdown code fences or bullet points so it sounds natural when spoken aloud."""
+
+    # 1. Try Sarvam AI API
+    if sarvam_key:
+        headers = {"Content-Type": "application/json", "api-subscription-key": sarvam_key}
+        payload = {
+            "model": "sarvam-105b",
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": query}
+            ],
+            "max_tokens": 400
+        }
+        try:
+            resp = requests.post("https://api.sarvam.ai/v1/chat/completions", headers=headers, json=payload, timeout=15)
+            if resp.status_code == 200:
+                data = resp.json()
+                msg = data.get("choices", [{}])[0].get("message", {})
+                raw_text = msg.get("content") or msg.get("reasoning_content") or ""
+                cleaned = re.sub(r"<think>.*?</think>", "", raw_text, flags=re.S).strip()
+                cleaned = re.sub(r"</?think>", "", cleaned, flags=re.I).strip()
+                
+                # Split into double-newline paragraphs and extract the final clean answer block
+                blocks = [b.strip() for b in cleaned.split("\n\n") if b.strip() and not re.match(r"^\d+\.", b.strip()) and not b.strip().startswith("**Step")]
+                if blocks:
+                    final_text = blocks[-1]
+                    # Remove markdown formatting for TTS speech compatibility
+                    final_text = re.sub(r"[\*\#\_]", "", final_text).strip()
+                    if len(final_text) > 15:
+                        return final_text
+                return re.sub(r"[\*\#\_]", "", cleaned[-350:]).strip()
+        except Exception as e:
+            print("Sarvam GenAI API error:", e)
+
+    return ""
 
 def process_agent_query(user_name: str, query: str):
     """
@@ -236,7 +251,7 @@ def process_agent_query(user_name: str, query: str):
     # =====================================================================
     # 7. ABOUT WDC & COLLEGE INTENT
     # =====================================================================
-    about_keywords = ["wdc", "club", "recb", "banda", "college", "about", "detail", "info", "क्लब", "कॉलेज", "बांदा", "जानकारी", "डिटेल", "संस्थान"]
+    about_keywords = ["wdc", "recb", "banda", "college", "about wdc", "about club", "club detail", "क्लब", "कॉलेज", "बांदा", "जानकारी", "डिटेल", "संस्थान"]
     if any(kw in q for kw in about_keywords):
         if lang == "hi_devanagari":
             text = f"नमस्ते {user_name}! WDC (Web Development Club) राजकीय इंजीनियरिंग कॉलेज बांदा (RECB) का प्रीमियर ऑफिशियल टेक्निकल क्लब है। हम 200+ एक्टिव स्टूडेंट मेंबर्स को हैंड-ऑन वर्कशॉप्स और प्रोजेक्ट्स के ज़रिए ट्रेन करते हैं।"
@@ -265,7 +280,7 @@ def process_agent_query(user_name: str, query: str):
     # =====================================================================
     # 9. GREETINGS & INTRODUCTORY RESPONSES
     # =====================================================================
-    if any(kw in q for kw in ["hi", "hello", "namaste", "hey", "नमस्ते", "हेलो", "हाय"]):
+    if any(re.search(r"\b" + kw + r"\b", q) for kw in ["hi", "hello", "namaste", "hey"]):
         if lang == "hi_devanagari":
             text = f"नमस्ते {user_name}! मैं हूँ WDC AI Concierge AURA। मैं वर्कशॉप्स, नोटिफिकेशन और रजिस्ट्रेशन में आपकी सहायता कर सकती हूँ। आप क्या जानना चाहते हैं?"
         elif lang == "en":
@@ -276,7 +291,14 @@ def process_agent_query(user_name: str, query: str):
         return {"response_text": text, "action_type": "text_response", "payload": {}}
 
     # =====================================================================
-    # 10. SMART FALLBACK RESPONSE IN MATCHED LANGUAGE
+        # =====================================================================
+    # 10. INTELLIGENT GEN-AI CLAUDE FALLBACK FOR GENERAL QUESTIONS
+    # =====================================================================
+    ai_response = call_claude_genai(user_name, query, lang)
+    if ai_response:
+        return {"response_text": ai_response, "action_type": "text_response", "payload": {}}
+
+    # Standard Fallback if offline
     # =====================================================================
     if lang == "hi_devanagari":
         text = f"नमस्ते {user_name}! आप मुझसे पूछ सकते हैं:\n• 'अगली वर्कशॉप कब है?' — शेड्यूल देखने के लिए\n• 'नोटिफिकेशन दिखाओ' — अपडेट के लिए\n• 'रजिस्टर करना है' — फ़ॉर्म भरने के लिए\n• 'डोमेन कौन से हैं?' — डोमेन सूची के लिए"

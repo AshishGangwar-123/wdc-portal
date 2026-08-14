@@ -132,27 +132,30 @@ export default function CursorVisualEffects() {
     window.addEventListener('mousemove', onMouseMove, { passive: true });
     window.addEventListener('mousedown', onMouseDown, { passive: true });
 
-    // Animation Loop
+    // Animation Loop - Optimized: only clear & draw when active particles/ripples exist
     const render = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (particles.length > 0 || ripples.length > 0) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Iterate in reverse to safely splice without index drift
-      for (let idx = particles.length - 1; idx >= 0; idx--) {
-        const p = particles[idx];
-        p.update();
-        p.draw();
-        if (p.alpha <= 0 || p.size <= 0.2) {
-          particles.splice(idx, 1);
+        for (let idx = particles.length - 1; idx >= 0; idx--) {
+          const p = particles[idx];
+          p.update();
+          p.draw();
+          if (p.alpha <= 0 || p.size <= 0.2) {
+            particles.splice(idx, 1);
+          }
         }
-      }
 
-      for (let idx = ripples.length - 1; idx >= 0; idx--) {
-        const r = ripples[idx];
-        r.update();
-        r.draw();
-        if (r.alpha <= 0) {
-          ripples.splice(idx, 1);
+        for (let idx = ripples.length - 1; idx >= 0; idx--) {
+          const r = ripples[idx];
+          r.update();
+          r.draw();
+          if (r.alpha <= 0) {
+            ripples.splice(idx, 1);
+          }
         }
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
 
       animationFrameId = requestAnimationFrame(render);

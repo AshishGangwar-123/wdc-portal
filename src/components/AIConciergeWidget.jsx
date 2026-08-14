@@ -15,6 +15,7 @@ import {
   Languages,
   Mail,
   Loader2,
+  X,
 } from 'lucide-react';
 import AIAvatar from './AIAvatar';
 import WorkshopForm from './WorkshopForm';
@@ -31,7 +32,7 @@ const HINDI_DEVANAGARI_MAP = [
   { match: 'save ho gaya', replacement: 'आपका नाम सफलता पूर्वक सेव हो गया है।' },
 ];
 
-export default function AIConciergeWidget({ isSiteLoaded }) {
+export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
   const [userName, setUserName] = useState('');
   const [nameInput, setNameInput] = useState('');
   const [conciergeState, setConciergeState] = useState('main_menu');
@@ -498,7 +499,65 @@ export default function AIConciergeWidget({ isSiteLoaded }) {
   const nextWorkshop = liveWorkshops[0];
   const activeNotifications = liveNotifications.filter((n) => n.active);
 
-  return (
+  if (isOpen === false) return null;
+
+  const modalWrapper = (children) => {
+    if (isOpen) {
+      return (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 99999,
+            background: 'rgba(4, 6, 15, 0.85)',
+            backdropFilter: 'blur(16px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px',
+            animation: 'fadeIn 0.3s ease',
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget && onClose) onClose();
+          }}
+        >
+          <div style={{ position: 'relative', width: '100%', maxWidth: '1050px', maxHeight: '92vh', overflowY: 'auto', borderRadius: '32px' }}>
+            {onClose && (
+              <button
+                onClick={onClose}
+                style={{
+                  position: 'absolute',
+                  top: '-18px',
+                  right: '-18px',
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  background: 'rgba(8, 9, 20, 0.95)',
+                  border: '1.5px solid rgba(0, 242, 254, 0.5)',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 10,
+                  boxShadow: '0 0 20px rgba(0, 242, 254, 0.3)',
+                  transition: 'all 0.2s ease',
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              >
+                <X size={20} color="#00f2fe" />
+              </button>
+            )}
+            {children}
+          </div>
+        </div>
+      );
+    }
+    return children;
+  };
+
+  return modalWrapper(
     <div
       ref={widgetRef}
       className="glass-panel ai-concierge-grid"

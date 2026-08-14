@@ -727,3 +727,49 @@ img, video, canvas, svg, iframe {
     display: none !important;
   }
 }
+
+
+/* ============================================================
+   SENIOR DEV SMOOTHNESS & TAP FEEDBACK ENHANCEMENTS
+   ============================================================ */
+
+/* 1. Eliminate 300ms mobile tap delay */
+a, button, input, select, textarea, .glass-btn, [role="button"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 2. Active press feedback on all buttons */
+button:active, .glass-btn:active {
+  transform: scale(0.96) !important;
+  transition: transform 0.08s ease !important;
+}
+
+/* 3. Smooth custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #080914;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 242, 254, 0.25);
+  border-radius: 99px;
+  border: 2px solid #080914;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 242, 254, 0.5);
+}
+
+/* 4. Hardware acceleration for smooth GPU rendering */
+/* 4. Optimized Hardware Acceleration - Target active animated elements only (prevents GPU memory lag during scroll) */
+.marquee-track, .bg-orb, .type-cursor {
+  will-change: transform;
+}
+
+/* 5. Content-visibility & scroll rendering optimization */
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px;
+}
