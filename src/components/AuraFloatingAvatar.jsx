@@ -19,7 +19,7 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
   const bubbleTimeout = useRef(null);
   const typeTimeout = useRef(null);
 
-  const welcomeText = "Namaste! Main hun AURA - WDC ka AI Assistant. Aap mujhse bolkar ya chat karke baat kar sakte hain!";
+  const welcomeText = "नमस्ते! मैं हूँ AURA — WDC की AI Assistant। आप मुझसे बोलकर या चैट करके बात कर सकते हैं!";
 
   const typeWriter = (text, onDone) => {
     let i = 0;
@@ -51,14 +51,14 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
         }
 
         const utter = new SpeechSynthesisUtterance(
-          "Namaste! Main hun AURA. W D C ka A I Assistant. Aap mujhse bolkar ya chat karke baat kar sakte hain!"
+          "नमस्ते! मैं हूँ औरा, वेब डेवलपमेंट क्लब की ए०आई० असिस्टेंट। आप मुझसे बोलकर या चैट करके बात कर सकते हैं!"
         );
         utter.lang = 'hi-IN';
-        utter.rate = 0.95;
-        utter.pitch = 1.1;
+        utter.rate = 0.92;
+        utter.pitch = 1.0;
 
         const voices = window.speechSynthesis.getVoices() || [];
-        const hindiVoice = voices.find(v => v.lang && (v.lang.includes('hi') || v.lang.includes('IN')));
+        const hindiVoice = voices.find(v => v.lang && (v.lang.includes('hi') || v.lang.toLowerCase().includes('hindi')));
         if (hindiVoice) utter.voice = hindiVoice;
 
         utter.onstart = () => {
