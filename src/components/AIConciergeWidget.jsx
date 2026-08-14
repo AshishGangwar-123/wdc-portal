@@ -282,7 +282,7 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
       if (siteLoadedRef.current && !welcomeTriggered.current) {
         welcomeTriggered.current = true;
         const welcomeSpeech = speechLang === 'hi'
-          ? `नमस्ते! वेब डेवलपमेंट क्लब बांदा में आपका स्वागत है। मैं आपकी एआई असिस्टेंट ऑरा हूँ।`
+          ? `नमस्ते! वेब डेवलपमेंट क्लब बांदा में आपका स्वागत है। मैं आपकी एआई असिस्टेंट औरा हूँ। आप मुझसे बोलकर या चैट करके बात कर सकते हैं!`
           : `Welcome to Web Development Club RECB! I am your AI Voice Assistant AURA. How can I help you today?`;
         // Small delay so speech engine is fully ready
         setTimeout(() => speakText(welcomeSpeech), 300);

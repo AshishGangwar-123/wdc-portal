@@ -19,7 +19,7 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
   const bubbleTimeout = useRef(null);
   const typeTimeout = useRef(null);
 
-  const welcomeText = "नमस्ते! मैं हूँ AURA — WDC की AI Assistant। आप मुझसे बोलकर या चैट करके बात कर सकते हैं!";
+  const welcomeText = "नमस्ते! वेब डेवलपमेंट क्लब बांदा में आपका स्वागत है। मैं आपकी AI Assistant AURA हूँ। आप मुझसे बोलकर या चैट करके बात कर सकते हैं!";
 
   const typeWriter = (text, onDone) => {
     let i = 0;
@@ -51,7 +51,7 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
         }
 
         const utter = new SpeechSynthesisUtterance(
-          "नमस्ते! मैं हूँ औरा, वेब डेवलपमेंट क्लब की ए आई असिस्टेंट। आप मुझसे बोलकर या चैट करके बात कर सकते हैं!"
+          "नमस्ते! वेब डेवलपमेंट क्लब बांदा में आपका स्वागत है। मैं आपकी एआई असिस्टेंट औरा हूँ। आप मुझसे बोलकर या चैट करके बात कर सकते हैं!"
         );
         utter.lang = 'hi-IN';
         utter.rate = 0.92;
