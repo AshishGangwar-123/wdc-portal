@@ -21,6 +21,7 @@ import AIConciergeWidget from './AIConciergeWidget';
 import AuraFloatingAvatar from './AuraFloatingAvatar';
 import MediaGalleryBox from './MediaGalleryBox';
 import TeamDeck3D from './TeamDeck3D';
+import TypewriterText from './TypewriterText';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -72,38 +73,6 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
       .catch(() => {});
   }, []);
 
-  const [typedText, setTypedText] = useState('');
-  const phrases = ['AI / ML Workshops','Web Dev Sessions','Data Science Deep Dives','Hackathon Prep','C Programming Bootcamps'];
-  const phraseIdx = useRef(0);
-  const charIdx   = useRef(0);
-  const deleting  = useRef(false);
-
-  // Typewriter effect
-  useEffect(() => {
-    const tick = () => {
-      const phrase = phrases[phraseIdx.current];
-      if (!deleting.current) {
-        setTypedText(phrase.slice(0, charIdx.current + 1));
-        charIdx.current++;
-        if (charIdx.current === phrase.length) {
-          deleting.current = true;
-          setTimeout(tick, 1800);
-          return;
-        }
-      } else {
-        setTypedText(phrase.slice(0, charIdx.current - 1));
-        charIdx.current--;
-        if (charIdx.current === 0) {
-          deleting.current = false;
-          phraseIdx.current = (phraseIdx.current + 1) % phrases.length;
-        }
-      }
-      setTimeout(tick, deleting.current ? 50 : 80);
-    };
-    const t = setTimeout(tick, 600);
-    return () => clearTimeout(t);
-  }, []);
-
   // GSAP Master Timeline
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -147,74 +116,60 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
         { scale: 1, opacity: 1, y: 0, duration: 0.5, stagger: 0.07, ease: 'back.out(1.5)', delay: 1.5 }
       );
 
-
-
       // ─── MARQUEE SECTION ─────────────────────────────────────────
-      ScrollTrigger.create({
-        trigger: marqueeRef.current,
-        start: 'top 85%',
-        onEnter: () => {
-          gsap.fromTo(marqueeRef.current,
-            { opacity: 0, y: 30 },
-            { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
-          );
-        },
-        once: true,
-      });
+      if (marqueeRef.current) {
+        gsap.fromTo(marqueeRef.current,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+            scrollTrigger: { trigger: marqueeRef.current, start: 'top 90%', once: true }
+          }
+        );
+      }
 
       // ─── DOMAINS SECTION STAGGER ─────────────────────────────────
-      ScrollTrigger.create({
-        trigger: domainsRef.current,
-        start: 'top 75%',
-        onEnter: () => {
-          gsap.fromTo('.domain-card',
-            { y: 60, opacity: 0, scale: 0.92 },
-            { y: 0, opacity: 1, scale: 1, duration: 0.8, stagger: 0.1, ease: 'power3.out' }
-          );
-        },
-        once: true,
-      });
+      if (domainsRef.current) {
+        gsap.fromTo('.domain-card',
+          { y: 40, opacity: 0, scale: 0.95 },
+          {
+            y: 0, opacity: 1, scale: 1, duration: 0.7, stagger: 0.08, ease: 'power3.out',
+            scrollTrigger: { trigger: domainsRef.current, start: 'top 85%', once: true }
+          }
+        );
+      }
 
       // ─── WHY JOIN CARDS ───────────────────────────────────────────
-      ScrollTrigger.create({
-        trigger: whyJoinRef.current,
-        start: 'top 75%',
-        onEnter: () => {
-          gsap.fromTo('.why-card',
-            { y: 50, opacity: 0, rotateY: -15 },
-            { y: 0, opacity: 1, rotateY: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' }
-          );
-        },
-        once: true,
-      });
+      if (whyJoinRef.current) {
+        gsap.fromTo('.why-card',
+          { y: 40, opacity: 0 },
+          {
+            y: 0, opacity: 1, duration: 0.7, stagger: 0.08, ease: 'power3.out',
+            scrollTrigger: { trigger: whyJoinRef.current, start: 'top 85%', once: true }
+          }
+        );
+      }
 
       // ─── SECTION HEADINGS SPLIT REVEAL ───────────────────────────
       gsap.utils.toArray('.section-heading-reveal').forEach((el) => {
-        ScrollTrigger.create({
-          trigger: el,
-          start: 'top 85%',
-          onEnter: () => {
-            gsap.fromTo(el,
-              { y: 40, opacity: 0 },
-              { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' }
-            );
-          },
-          once: true,
-        });
+        gsap.fromTo(el,
+          { y: 30, opacity: 0 },
+          {
+            y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+          }
+        );
       });
 
       // ─── CTA SECTION ─────────────────────────────────────────────
-      ScrollTrigger.create({
-        trigger: ctaRef.current,
-        start: 'top 85%',
-        onEnter: () => {
-          gsap.fromTo(ctaRef.current,
-            { opacity: 0 },
-            { opacity: 1, duration: 0.8, ease: 'power2.out' }
-          );
-        },
-        once: true,
-      });
+      if (ctaRef.current) {
+        gsap.fromTo(ctaRef.current,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
+            scrollTrigger: { trigger: ctaRef.current, start: 'top 85%', once: true }
+          }
+        );
+      }
 
       // ─── DOMAIN CARD HOVER TILT ───────────────────────────────────
       document.querySelectorAll('.domain-card').forEach((card) => {
@@ -333,9 +288,7 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
             style={{ marginBottom: '16px', fontSize: '1.1rem', color: '#94a3b8', minHeight: '3.6em', lineHeight: 1.5, display: 'block' }}
           >
             The official tech club of RECB Banda, conducting expert-led{' '}
-            <span style={{ color: '#00f2fe', fontWeight: 700, display: 'inline' }}>
-              {typedText}<span className="type-cursor" />
-            </span>
+            <TypewriterText />
           </div>
 
           <p
@@ -431,7 +384,7 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
       {/* ================================================================
           TECH STACK MARQUEE
           ================================================================ */}
-      <div ref={marqueeRef} style={{ margin: '80px 0', overflow: 'hidden', position: 'relative', zIndex: 2, opacity: 0 }}>
+      <div ref={marqueeRef} style={{ margin: '80px 0', overflow: 'hidden', position: 'relative', zIndex: 2 }}>
         <div style={{ marginBottom: '16px', textAlign: 'center' }}>
           <span style={{ fontFamily: 'Fira Code', fontSize: '0.75rem', color: '#475569', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
             What We Learn — Our Tech Arsenal
@@ -492,7 +445,6 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
                   cursor: 'default',
                   position: 'relative',
                   overflow: 'hidden',
-                  opacity: 0,
                 }}
               >
                 {/* Background glow */}
@@ -561,7 +513,7 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
               <div
                 key={i}
                 className="why-card glass-panel"
-                style={{ padding: '32px', cursor: 'default', opacity: 0 }}
+                style={{ padding: '32px', cursor: 'default' }}
               >
                 <div style={{
                   display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px',
@@ -711,7 +663,7 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
           ================================================================ */}
       <section
         ref={ctaRef}
-        style={{ maxWidth: '900px', margin: '120px auto 0', padding: '0 24px', position: 'relative', zIndex: 2, textAlign: 'center', opacity: 0 }}
+        style={{ maxWidth: '900px', margin: '120px auto 0', padding: '0 24px', position: 'relative', zIndex: 2, textAlign: 'center' }}
       >
         <div
           className="glass-panel"

@@ -820,23 +820,28 @@ img, video, canvas, svg, iframe {
 /* ============================================================
    PERFORMANCE: MOBILE — Disable expensive effects on touch devices
    ============================================================ */
-@media (hover: none) and (pointer: coarse) {
-  /* Floating code elements cause unnecessary GPU work on mobile/tablet */
-  .floating-code-item {
+@media (hover: none) and (pointer: coarse), (max-width: 768px) {
+  /* Floating code elements and custom cursors cause unnecessary GPU work on mobile/tablet */
+  .floating-code-item,
+  .custom-cursor,
+  .custom-cursor-follower {
     display: none !important;
   }
 
   /* Simplify orb animations on mobile — reduce GPU composite layers */
   .bg-orb {
     animation: none !important;
-    filter: blur(80px) !important;
+    filter: blur(50px) !important;
+    opacity: 0.18 !important;
   }
 
-  /* Disable backdrop blur on glass panels on low-power mobile devices */
-  .glass-panel {
+  /* Disable expensive backdrop blurs on mobile devices to prevent GPU rendering lag */
+  .glass-panel,
+  .float-badge,
+  .glass-btn {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    background: rgba(14, 16, 38, 0.95) !important;
+    background: rgba(14, 16, 38, 0.94) !important;
   }
 }
 

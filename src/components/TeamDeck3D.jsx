@@ -164,10 +164,11 @@ export default function TeamDeck3D() {
                 boxShadow: isCenter
                   ? '0 20px 50px rgba(0, 242, 254, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
                   : '0 12px 30px rgba(0, 0, 0, 0.5)',
-                backdropFilter: 'blur(16px)',
+                backdropFilter: isMobile ? 'none' : 'blur(16px)',
                 cursor: 'pointer',
                 transform: `translateX(${translateX}px) translateY(${translateY}px) rotateZ(${rotateZ}deg) rotateY(${rotateY}deg) scale(${scale})`,
                 transition: 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                willChange: 'transform',
                 zIndex: zIndex,
                 padding: '16px',
                 display: 'flex',

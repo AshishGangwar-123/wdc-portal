@@ -1,11 +1,26 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
 export default function CursorVisualEffects() {
   const canvasRef = useRef(null);
   const spotlightRef = useRef(null);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
+    // Detect mobile touch devices — disable canvas sparkles and cursor spotlight
+    const checkTouch = () => {
+      return (
+        'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0 ||
+        window.matchMedia('(pointer: coarse)').matches
+      );
+    };
+
+    if (checkTouch()) {
+      setIsTouchDevice(true);
+      return;
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -170,6 +185,8 @@ export default function CursorVisualEffects() {
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
+
+  if (isTouchDevice) return null;
 
   return (
     <>

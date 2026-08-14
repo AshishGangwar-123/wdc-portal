@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { Code2, Terminal, Cpu, GitBranch, Database, Layers, Flame, FileCode, Braces } from 'lucide-react';
 
@@ -31,10 +31,25 @@ const FLOATING_ICONS = [
 
 export default function FloatingCodeElements() {
   const containerRef = useRef(null);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
+    const checkTouch = () => {
+      return (
+        'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0 ||
+        window.matchMedia('(pointer: coarse)').matches
+      );
+    };
+
+    if (checkTouch()) {
+      setIsTouchDevice(true);
+      return;
+    }
+
     const ctx = gsap.context(() => {
-      const elements = containerRef.current.querySelectorAll('.floating-code-item');
+      const elements = containerRef.current?.querySelectorAll('.floating-code-item');
+      if (!elements) return;
 
       elements.forEach((el, index) => {
         // Smooth floating physics
@@ -93,6 +108,8 @@ export default function FloatingCodeElements() {
 
     return () => ctx.revert();
   }, []);
+
+  if (isTouchDevice) return null;
 
   return (
     <div
