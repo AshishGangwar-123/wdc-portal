@@ -837,6 +837,13 @@ img, video, canvas, svg, iframe {
    PERFORMANCE: MOBILE — Disable expensive effects & prevent blank spaces
    ============================================================ */
 @media (hover: none) and (pointer: coarse), (max-width: 768px) {
+  /* Ultra-smooth native momentum scrolling for mobile phones */
+  html, body {
+    overflow-x: hidden !important;
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
   /* Floating code elements and custom cursors cause unnecessary GPU work on mobile/tablet */
   .floating-code-item,
   .custom-cursor,
@@ -869,7 +876,9 @@ img, video, canvas, svg, iframe {
     filter: none !important;
   }
 
-  /* Guarantee elements are never hidden by GSAP scroll triggers on mobile viewports */
+  /* Guarantee footer and page elements are 100% visible and stable on mobile viewports */
+  footer,
+  footer *,
   .domain-card,
   .why-card,
   .section-heading-reveal,

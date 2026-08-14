@@ -32,7 +32,7 @@ export default function Loader({ onComplete }) {
       // Timeline for progress
       gsap.to(counter, {
         value: 100,
-        duration: isMobile ? 0.7 : 1.1,
+        duration: isMobile ? 1.6 : 1.3,
         ease: 'power2.inOut',
         onUpdate: () => {
           const val = Math.round(counter.value);
