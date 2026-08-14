@@ -713,7 +713,7 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
       </div>
 
       {/* RIGHT COLUMN: SMART ASSISTANT DISPLAY PANEL */}
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1, minWidth: 0, overflowY: 'auto', maxHeight: 'calc(88vh - 48px)', paddingRight: '4px' }}>
         <div
           style={{
             display: 'flex',
@@ -747,10 +747,12 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
               fontSize: '0.92rem',
               lineHeight: 1.55,
               boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
+              wordBreak: 'normal',
+              overflowWrap: 'anywhere',
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
-              <div style={{ flex: 1 }}>{activeMessage.text}</div>
+              <div style={{ flex: 1, minWidth: 0, wordBreak: 'normal', overflowWrap: 'anywhere' }}>{activeMessage.text}</div>
               <button
                 onClick={() => speakText(activeMessage.text)}
                 title="Read response aloud"
@@ -804,7 +806,7 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
 
           {/* Form View */}
           {conciergeState === 'form_view' && (
-            <div style={{ background: 'rgba(8, 9, 20, 0.9)', borderRadius: '20px', padding: '16px', border: '1px solid rgba(0,242,254,0.3)' }}>
+            <div style={{ background: 'rgba(8, 9, 20, 0.9)', borderRadius: '20px', padding: '16px', border: '1px solid rgba(0,242,254,0.3)', maxHeight: '420px', overflowY: 'auto' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
                 <span style={{ fontSize: '0.78rem', color: '#00f2fe', fontFamily: 'Fira Code' }}>
                   📋 WORKSHOP REGISTRATION FORM
@@ -835,12 +837,14 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
                   border: `1px solid ${ws.color || '#00f2fe'}60`,
                   borderRadius: '18px',
                   padding: '16px',
+                  wordBreak: 'normal',
+                  overflowWrap: 'anywhere',
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: ws.color || '#00f2fe', fontWeight: 700, fontSize: '0.85rem', marginBottom: '4px' }}>
                   <Calendar size={15} /> UPCOMING WORKSHOP
                 </div>
-                <div style={{ fontWeight: 800, fontSize: '1rem', color: '#fff', marginBottom: '4px' }}>
+                <div style={{ fontWeight: 800, fontSize: '1rem', color: '#fff', marginBottom: '4px', wordBreak: 'normal', overflowWrap: 'anywhere' }}>
                   {ws.title}
                 </div>
                 <div style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '10px' }}>
@@ -859,7 +863,7 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
 
           {/* All Workshops List View with Per-Workshop Form Buttons */}
           {conciergeState === 'all_workshops' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxHeight: '240px', overflowY: 'auto', paddingRight: '4px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxHeight: '280px', overflowY: 'auto', paddingRight: '4px' }}>
               {liveWorkshops.length === 0 ? (
                 <div style={{ padding: '12px', color: '#64748b', fontSize: '0.82rem', textAlign: 'center' }}>
                   No active workshops in database.
@@ -877,10 +881,11 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
                       justifyContent: 'space-between',
                       alignItems: 'center',
                       gap: '12px',
+                      flexWrap: 'wrap',
                     }}
                   >
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontWeight: 700, color: '#fff', fontSize: '0.88rem' }}>{ws.title}</div>
+                    <div style={{ flex: 1, minWidth: '180px' }}>
+                      <div style={{ fontWeight: 700, color: '#fff', fontSize: '0.88rem', wordBreak: 'normal', overflowWrap: 'anywhere' }}>{ws.title}</div>
                       <div style={{ fontSize: '0.76rem', color: '#94a3b8', marginTop: '2px' }}>
                         🗓 {ws.date} • ⏰ {ws.time} | 👨‍🏫 {ws.mentor}
                       </div>

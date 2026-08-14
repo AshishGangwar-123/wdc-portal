@@ -651,6 +651,13 @@ img, video, canvas, svg, iframe {
   padding: 24px;
   gap: 24px;
   min-height: 480px;
+  max-height: 88vh;
+  overflow-y: auto;
+}
+
+.ai-concierge-grid * {
+  word-break: normal !important;
+  overflow-wrap: anywhere !important;
 }
 
 .ai-quick-actions-grid {
@@ -704,11 +711,13 @@ img, video, canvas, svg, iframe {
     width: 100vw !important;
     min-height: 100vh !important;
     min-height: 100dvh !important;
+    max-height: none !important;
     padding: 14px 12px 20px !important;
     gap: 12px !important;
     border-radius: 0 !important;
     border: none !important;
     box-shadow: none !important;
+    overflow-y: auto !important;
   }
 
   .ai-concierge-close-btn {
