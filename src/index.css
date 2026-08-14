@@ -640,7 +640,7 @@ img, video, canvas, svg, iframe {
   }
 }
 
-/* AI Concierge Chatbot Responsive Grid */
+/* AI Concierge Chatbot Responsive Grid & Actions */
 .ai-concierge-grid {
   display: grid;
   grid-template-columns: 380px 1fr;
@@ -649,19 +649,52 @@ img, video, canvas, svg, iframe {
   min-height: 480px;
 }
 
-@media (max-width: 850px) {
+.ai-quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  /* Full screen overlay for mobile phones */
+  .ai-concierge-overlay {
+    padding: 0 !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+  }
+
+  .ai-concierge-modal-box {
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    max-height: 100dvh !important;
+    border-radius: 0 !important;
+    overflow-x: hidden !important;
+  }
+
   .ai-concierge-grid {
     grid-template-columns: 1fr !important;
-    padding: 14px !important;
-    gap: 14px !important;
-    min-height: auto !important;
-    border-radius: 20px !important;
+    padding: 14px 12px 18px !important;
+    gap: 12px !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
   /* Left bot avatar column compact layout on mobile */
   .ai-concierge-grid > div:first-child {
-    padding: 14px !important;
-    border-radius: 18px !important;
+    padding: 10px 12px !important;
+    border-radius: 16px !important;
+  }
+
+  /* Stack quick action buttons vertically on mobile to eliminate scrollbar */
+  .ai-quick-actions-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
   }
 }
 

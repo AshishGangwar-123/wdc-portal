@@ -505,6 +505,7 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
     if (isOpen) {
       return (
         <div
+          className="ai-concierge-overlay"
           style={{
             position: 'fixed',
             inset: 0,
@@ -521,7 +522,7 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
             if (e.target === e.currentTarget && onClose) onClose();
           }}
         >
-          <div style={{ position: 'relative', width: '100%', maxWidth: '1050px', maxHeight: '92vh', overflowY: 'auto', borderRadius: '24px' }}>
+          <div className="ai-concierge-modal-box" style={{ position: 'relative', width: '100%', maxWidth: '1050px', maxHeight: '92vh', overflowY: 'auto', borderRadius: '24px' }}>
             {onClose && (
               <button
                 onClick={onClose}
@@ -988,7 +989,7 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
         </div>
 
         {/* Modern Quick Action Buttons Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginBottom: '14px' }}>
+        <div className="ai-quick-actions-grid" style={{ marginBottom: '14px' }}>
           <button
             onClick={handleDeliverWorkshopInfo}
             style={{
