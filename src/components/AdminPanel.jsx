@@ -46,7 +46,7 @@ const LinkedInIcon = ({ size = 14, color = 'currentColor' }) => (
   </svg>
 );
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = '';
 
 export default function AdminPanel({ onBack }) {
   const [activeTab, setActiveTab] = useState('overview');

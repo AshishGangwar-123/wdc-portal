@@ -3,7 +3,7 @@ import { User, Mail, Phone, Code, Sparkles, CheckCircle2, Ticket, ArrowRight, Re
 import confetti from 'canvas-confetti';
 import gsap from 'gsap';
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = '';
 
 export default function WorkshopForm({ onResetForm, workshopData }) {
   const formContainerRef = useRef(null);

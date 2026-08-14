@@ -638,10 +638,11 @@ img, video, canvas, svg, iframe {
     border-radius: 18px !important;
   }
 
-  /* Responsive Grid layouts */
-  div[style*="display: grid"],
-  div[style*="display:grid"] {
+  /* Clean Responsive Grid Layouts */
+  .hero-grid {
     grid-template-columns: 1fr !important;
+    min-height: auto !important;
+    gap: 24px !important;
   }
 
   /* Responsive Tables */
@@ -672,8 +673,8 @@ img, video, canvas, svg, iframe {
 
   /* Section padding scale */
   section {
-    padding-top: 40px !important;
-    padding-bottom: 40px !important;
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
   }
 
   /* Text wrap & line breaks */
@@ -762,14 +763,7 @@ button:active, .glass-btn:active {
   background: rgba(0, 242, 254, 0.5);
 }
 
-/* 4. Hardware acceleration for smooth GPU rendering */
-/* 4. Optimized Hardware Acceleration - Target active animated elements only (prevents GPU memory lag during scroll) */
+/* 4. Optimized Hardware Acceleration - Target active animated elements only */
 .marquee-track, .bg-orb, .type-cursor {
   will-change: transform;
-}
-
-/* 5. Content-visibility & scroll rendering optimization */
-section {
-  content-visibility: auto;
-  contain-intrinsic-size: 1000px;
 }

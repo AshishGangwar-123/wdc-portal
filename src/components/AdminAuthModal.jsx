@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { User, Lock, ShieldCheck, Eye, EyeOff, X, ArrowRight, AlertCircle, KeyRound, Loader2 } from 'lucide-react';
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = '';
 
 export default function AdminAuthModal({ onSuccess, onCancel }) {
   const [username, setUsername] = useState('');

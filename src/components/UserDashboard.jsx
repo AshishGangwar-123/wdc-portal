@@ -31,7 +31,7 @@ import {
 import confetti from 'canvas-confetti';
 import gsap from 'gsap';
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = '';
 
 export default function UserDashboard({ onClose, currentUser, onLoginSuccess, onLogout }) {
   const containerRef = useRef(null);

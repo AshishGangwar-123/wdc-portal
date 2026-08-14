@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = '';
 
 export default function MediaGalleryBox() {
   const [mediaList, setMediaList] = useState([]);
