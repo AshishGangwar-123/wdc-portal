@@ -149,7 +149,7 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
       userSelect: 'none',
     }}>
       {/* Speech Bubble */}
-      <div style={{
+      <div className="aura-speech-bubble" style={{
         position: 'absolute',
         top: '10px',
         left: '50%',
@@ -178,6 +178,7 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
 
       {/* Floating Robot PNG Avatar Container */}
       <div
+        className="aura-avatar-box"
         onClick={handleAvatarClick}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -209,6 +210,7 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
 
         {/* Robot Image Element with Dynamic Speaking Animation */}
         <img
+          className="aura-avatar-img"
           src="/aura_bot.png"
           alt="AURA Robot Assistant"
           style={{

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   Bot, 
   Send, 
@@ -503,14 +504,14 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
 
   const modalWrapper = (children) => {
     if (isOpen) {
-      return (
+      const modalContent = (
         <div
           className="ai-concierge-overlay"
           style={{
             position: 'fixed',
             inset: 0,
-            zIndex: 99999,
-            background: 'rgba(4, 6, 15, 0.85)',
+            zIndex: 99999999,
+            background: 'rgba(4, 6, 15, 0.95)',
             backdropFilter: 'blur(16px)',
             display: 'flex',
             alignItems: 'center',
@@ -542,7 +543,7 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  zIndex: 100,
+                  zIndex: 999999999,
                   boxShadow: '0 0 20px rgba(0, 242, 254, 0.3)',
                   transition: 'all 0.2s ease',
                 }}
@@ -556,6 +557,8 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
           </div>
         </div>
       );
+
+      return typeof document !== 'undefined' ? createPortal(modalContent, document.body) : modalContent;
     }
     return children;
   };
