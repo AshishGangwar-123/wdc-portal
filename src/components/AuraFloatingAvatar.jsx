@@ -43,7 +43,9 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
     let spoken = false;
 
     const speakNow = () => {
-      if (spoken || !('speechSynthesis' in window)) return;
+      if (spoken || window._wdc_has_spoken_welcome || !('speechSynthesis' in window)) return;
+      window._wdc_has_spoken_welcome = true;
+      spoken = true;
       try {
         window.speechSynthesis.cancel();
         if (window.speechSynthesis.resume) {

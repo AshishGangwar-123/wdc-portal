@@ -278,9 +278,10 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
 
   useEffect(() => {
     const fireWelcome = () => {
-      // Only fire if site is loaded and welcome hasn't been spoken yet
-      if (siteLoadedRef.current && !welcomeTriggered.current) {
+      // Only fire if site is loaded and welcome hasn't been spoken yet anywhere in the app
+      if (siteLoadedRef.current && !welcomeTriggered.current && !window._wdc_has_spoken_welcome) {
         welcomeTriggered.current = true;
+        window._wdc_has_spoken_welcome = true;
         const welcomeSpeech = speechLang === 'hi'
           ? `नमस्ते! वेब डेवलपमेंट क्लब बांदा में आपका स्वागत है। मैं आपकी एआई असिस्टेंट औरा हूँ। आप मुझसे बोलकर या चैट करके बात कर सकते हैं!`
           : `Welcome to Web Development Club RECB! I am your AI Voice Assistant AURA. How can I help you today?`;
