@@ -59,21 +59,35 @@ export default function FloatingCodeElements() {
         });
       });
 
-      // Mouse Parallax movement
-      const handleMouseMove = (e) => {
-        const { clientX, clientY } = e;
-        const xOffset = (clientX / window.innerWidth - 0.5) * 30;
-        const yOffset = (clientY / window.innerHeight - 0.5) * 30;
+      // Mouse Parallax movement — rAF throttled to prevent scroll jank
+      let rafScheduled = false;
+      let lastX = 0, lastY = 0;
 
-        gsap.to(elements, {
-          x: (i) => (i % 2 === 0 ? xOffset * 0.6 : -xOffset * 0.6),
-          y: (i) => (i % 2 === 0 ? yOffset * 0.6 : -yOffset * 0.6),
-          duration: 1.2,
-          ease: 'power1.out',
-        });
+      const handleMouseMove = (e) => {
+        lastX = e.clientX;
+        lastY = e.clientY;
+
+        // Only schedule ONE GSAP update per animation frame
+        if (!rafScheduled) {
+          rafScheduled = true;
+          requestAnimationFrame(() => {
+            const xOffset = (lastX / window.innerWidth - 0.5) * 28;
+            const yOffset = (lastY / window.innerHeight - 0.5) * 28;
+
+            gsap.to(elements, {
+              x: (i) => (i % 2 === 0 ? xOffset * 0.5 : -xOffset * 0.5),
+              y: (i) => (i % 2 === 0 ? yOffset * 0.5 : -yOffset * 0.5),
+              duration: 1.4,
+              ease: 'power1.out',
+              overwrite: 'auto', // prevents GSAP animation queue buildup
+            });
+            rafScheduled = false;
+          });
+        }
       };
 
-      window.addEventListener('mousemove', handleMouseMove);
+      // passive: true = browser scrolls without waiting for this listener
+      window.addEventListener('mousemove', handleMouseMove, { passive: true });
       return () => window.removeEventListener('mousemove', handleMouseMove);
     });
 
@@ -89,6 +103,9 @@ export default function FloatingCodeElements() {
         pointerEvents: 'none',
         zIndex: 1,
         overflow: 'hidden',
+        // GPU composite layer — prevents repaint during scroll
+        willChange: 'transform',
+        contain: 'strict',
       }}
     >
       {/* Floating Colorful Code Text Badges */}
@@ -113,6 +130,8 @@ export default function FloatingCodeElements() {
             userSelect: 'none',
             letterSpacing: '0.5px',
             opacity: 0.15, // Faint initial intensity
+            // GPU layer per element for smooth float animation
+            willChange: 'transform, opacity',
           }}
         >
           {item.text}
@@ -139,6 +158,7 @@ export default function FloatingCodeElements() {
             boxShadow: `0 0 12px ${color}12`,
             backdropFilter: 'blur(4px)',
             opacity: 0.15, // Faint initial intensity
+            willChange: 'transform, opacity',
           }}
         >
           <Icon size={size} color={color} />

@@ -286,6 +286,11 @@ body.cursor-hover .custom-cursor-follower {
   100% { transform: translate(40px, -30px) scale(1.08); }
 }
 
+/* Orb GPU isolation — prevents repaint cascading to page content */
+.bg-orb {
+  contain: strict;
+}
+
 /* Dot Matrix Background */
 .bg-dots {
   position: absolute;
@@ -494,7 +499,9 @@ body.cursor-hover .custom-cursor-follower {
 .marquee-track {
   display: flex;
   animation: marquee 28s linear infinite;
+  /* GPU composite — marquee animation doesn't trigger layout/paint */
   will-change: transform;
+  transform: translateZ(0);
 }
 
 .marquee-track:hover {
@@ -676,3 +683,47 @@ img, video, canvas, svg, iframe {
 }
 
 
+/* ============================================================
+   PERFORMANCE: MOBILE — Disable expensive effects on touch devices
+   ============================================================ */
+@media (hover: none) and (pointer: coarse) {
+  /* Floating code elements cause unnecessary GPU work on mobile/tablet */
+  .floating-code-item {
+    display: none !important;
+  }
+
+  /* Simplify orb animations on mobile — reduce GPU composite layers */
+  .bg-orb {
+    animation: none !important;
+    filter: blur(80px) !important;
+  }
+
+  /* Disable backdrop blur on glass panels on low-power mobile devices */
+  .glass-panel {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(14, 16, 38, 0.95) !important;
+  }
+}
+
+/* ============================================================
+   PERFORMANCE: prefers-reduced-motion — Accessibility + Low-end devices
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .marquee-track {
+    animation: none !important;
+  }
+
+  .floating-code-item {
+    display: none !important;
+  }
+}

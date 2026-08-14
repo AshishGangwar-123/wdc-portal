@@ -19,7 +19,8 @@ import {
 import AIAvatar from './AIAvatar';
 import WorkshopForm from './WorkshopForm';
 
-const API_BASE = 'http://localhost:8000';
+// Relative URL — works on both local dev (via Vite proxy) and deployed Render server
+const API_BASE = '';
 
 // Helper dictionary to convert responses to proper Devanagari Hindi script for 100% natural TTS pronunciation
 const HINDI_DEVANAGARI_MAP = [
@@ -259,17 +260,50 @@ export default function AIConciergeWidget({ isSiteLoaded }) {
 
   }, []);
 
-  // Voice welcome trigger AFTER Site Loader finishes
+  // Voice welcome trigger — Browser Autoplay Policy Fix:
+  // Browsers block speech synthesis until the user has interacted with the page.
+  // We wait for the first user interaction (click/keydown/scroll) AFTER the site has loaded,
+  // then fire the welcome speech exactly once.
   const welcomeTriggered = useRef(false);
+  const siteLoadedRef = useRef(false);
+
+  // Track when site finishes loading
   useEffect(() => {
-    if (isSiteLoaded && !welcomeTriggered.current) {
-      welcomeTriggered.current = true;
-      const welcomeSpeech = speechLang === 'hi'
-        ? `नमस्ते! वेब डेवलपमेंट क्लब बांदा में आपका स्वागत है। मैं आपकी एआई असिस्टेंट ऑरा हूँ।`
-        : `Welcome to Web Development Club RECB! I am your AI Voice Assistant AURA. How can I help you today?`;
-      speakText(welcomeSpeech);
+    if (isSiteLoaded) {
+      siteLoadedRef.current = true;
     }
-  }, [isSiteLoaded, speechLang]);
+  }, [isSiteLoaded]);
+
+  useEffect(() => {
+    const fireWelcome = () => {
+      // Only fire if site is loaded and welcome hasn't been spoken yet
+      if (siteLoadedRef.current && !welcomeTriggered.current) {
+        welcomeTriggered.current = true;
+        const welcomeSpeech = speechLang === 'hi'
+          ? `नमस्ते! वेब डेवलपमेंट क्लब बांदा में आपका स्वागत है। मैं आपकी एआई असिस्टेंट ऑरा हूँ।`
+          : `Welcome to Web Development Club RECB! I am your AI Voice Assistant AURA. How can I help you today?`;
+        // Small delay so speech engine is fully ready
+        setTimeout(() => speakText(welcomeSpeech), 300);
+        // Remove listeners after first interaction
+        window.removeEventListener('click', fireWelcome);
+        window.removeEventListener('keydown', fireWelcome);
+        window.removeEventListener('touchstart', fireWelcome);
+        window.removeEventListener('scroll', fireWelcome, { once: true });
+      }
+    };
+
+    // Listen for the very first user interaction to unlock audio context
+    window.addEventListener('click', fireWelcome);
+    window.addEventListener('keydown', fireWelcome);
+    window.addEventListener('touchstart', fireWelcome);
+    window.addEventListener('scroll', fireWelcome, { once: true });
+
+    return () => {
+      window.removeEventListener('click', fireWelcome);
+      window.removeEventListener('keydown', fireWelcome);
+      window.removeEventListener('touchstart', fireWelcome);
+    };
+  }, [speechLang]);
 
   const handleNameSubmit = (e) => {
     e.preventDefault();

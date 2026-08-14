@@ -60,9 +60,9 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
 
   const [dbWorkshops, setDbWorkshops] = useState([]);
 
-  // Fetch live workshops from SQLite backend DB
+  // Fetch live workshops from backend DB (relative URL — works both local & deployed)
   useEffect(() => {
-    fetch('http://localhost:8000/api/workshops')
+    fetch('/api/workshops')
       .then((r) => (r.ok ? r.json() : []))
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) setDbWorkshops(data);
