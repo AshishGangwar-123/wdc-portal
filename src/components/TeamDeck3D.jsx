@@ -13,9 +13,17 @@ const API_BASE = '';
 
 const SUITS = ['♠️', '♦️', '♣️', '♥️'];
 
+const DEFAULT_TEAM = [
+  { id: 1, name: 'WDC Core Lead', role: 'Club Head & Full-Stack Lead', image_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80', linkedin_url: 'https://www.linkedin.com/company/web-dev-club-recb/' },
+  { id: 2, name: 'AI / ML Coordinator', role: 'GenAI & Python Lead', image_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80', linkedin_url: 'https://www.linkedin.com/company/web-dev-club-recb/' },
+  { id: 3, name: 'Data Science Head', role: 'Analytics & DSA Mentor', image_url: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80', linkedin_url: 'https://www.linkedin.com/company/web-dev-club-recb/' },
+  { id: 4, name: 'Tech Operations Head', role: 'Cloud & Database Lead', image_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80', linkedin_url: 'https://www.linkedin.com/company/web-dev-club-recb/' },
+  { id: 5, name: 'Design & Event Lead', role: 'UI/UX & Workshop Lead', image_url: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80', linkedin_url: 'https://www.linkedin.com/company/web-dev-club-recb/' },
+];
+
 export default function TeamDeck3D() {
-  const [members, setMembers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [members, setMembers] = useState(DEFAULT_TEAM);
+  const [loading, setLoading] = useState(false);
   const [activeIdx, setActiveIdx] = useState(0);
   const [isFanned, setIsFanned] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -36,8 +44,7 @@ export default function TeamDeck3D() {
           setActiveIdx(0);
         }
       })
-      .catch(() => {})
-      .finally(() => setLoading(false));
+      .catch(() => {});
   }, []);
 
   // Continuous Auto-swap Cards Loop (cycles every 3.2s)
@@ -49,7 +56,7 @@ export default function TeamDeck3D() {
     return () => clearInterval(interval);
   }, [members.length, isPaused]);
 
-  if (loading || members.length === 0) return null;
+  if (members.length === 0) return null;
 
   const handleNext = () => {
     setActiveIdx((prev) => (prev + 1) % members.length);

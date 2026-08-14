@@ -83,8 +83,16 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
     setShowBubble(true);
     typeWriter(welcomeText);
 
-    // Call voice greeting immediately!
-    speakNow();
+    const isTouchDevice = typeof window !== 'undefined' && (
+      'ontouchstart' in window ||
+      navigator.maxTouchPoints > 0 ||
+      window.matchMedia('(pointer: coarse)').matches
+    );
+
+    // Call voice greeting immediately on desktop, or wait for tap on mobile to comply with autoplay policy
+    if (!isTouchDevice) {
+      speakNow();
+    }
 
     // Backup gesture listener in case browser blocked autoplay audio before user interaction
     const unlockAndSpeak = () => {

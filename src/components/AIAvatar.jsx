@@ -36,10 +36,10 @@ export default function AIAvatar({ avatarState = 'idle' }) {
       {/* Rectangular Video Frame filling the avatar box */}
       <div
         ref={containerRef}
+        className="ai-avatar-video-frame"
         style={{
           position: 'relative',
           width: '100%',
-          height: '320px',
           borderRadius: '20px',
           overflow: 'hidden',
           border: '1px solid rgba(0, 242, 254, 0.3)',

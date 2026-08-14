@@ -10,14 +10,20 @@ export default function Loader({ onComplete }) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    const isMobile = typeof window !== 'undefined' && (
+      'ontouchstart' in window ||
+      navigator.maxTouchPoints > 0 ||
+      window.matchMedia('(pointer: coarse)').matches
+    );
+
     const ctx = gsap.context(() => {
       // Counter object to animate number
       const counter = { value: 0 };
 
       // Icon pulse
       gsap.to(iconRef.current, {
-        scale: 1.2,
-        duration: 0.8,
+        scale: 1.15,
+        duration: 0.7,
         repeat: -1,
         yoyo: true,
         ease: 'power1.inOut',
@@ -26,7 +32,7 @@ export default function Loader({ onComplete }) {
       // Timeline for progress
       gsap.to(counter, {
         value: 100,
-        duration: 1.2,
+        duration: isMobile ? 0.7 : 1.1,
         ease: 'power2.inOut',
         onUpdate: () => {
           const val = Math.round(counter.value);

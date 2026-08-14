@@ -641,6 +641,10 @@ img, video, canvas, svg, iframe {
 }
 
 /* AI Concierge Chatbot Responsive Grid & Actions */
+.ai-avatar-video-frame {
+  height: 320px;
+}
+
 .ai-concierge-grid {
   display: grid;
   grid-template-columns: 380px 1fr;
@@ -656,6 +660,9 @@ img, video, canvas, svg, iframe {
 }
 
 @media (max-width: 768px) {
+  .ai-avatar-video-frame {
+    height: 180px !important;
+  }
   /* 📱 Edge-to-Edge Full Screen Overlay for Mobile Phones */
   .ai-concierge-overlay {
     padding: 0 !important;
@@ -818,7 +825,7 @@ img, video, canvas, svg, iframe {
 
 
 /* ============================================================
-   PERFORMANCE: MOBILE — Disable expensive effects on touch devices
+   PERFORMANCE: MOBILE — Disable expensive effects & prevent blank spaces
    ============================================================ */
 @media (hover: none) and (pointer: coarse), (max-width: 768px) {
   /* Floating code elements and custom cursors cause unnecessary GPU work on mobile/tablet */
@@ -843,7 +850,23 @@ img, video, canvas, svg, iframe {
     -webkit-backdrop-filter: none !important;
     background: rgba(14, 16, 38, 0.94) !important;
   }
+
+  /* Guarantee elements are never hidden by GSAP scroll triggers on mobile viewports */
+  .domain-card,
+  .why-card,
+  .section-heading-reveal,
+  .hero-line,
+  .hero-sub,
+  .hero-btns,
+  .gsap-reveal,
+  .gsap-reveal-left,
+  .gsap-reveal-right,
+  .gsap-scale-in {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
 }
+
 
 /* ============================================================
    PERFORMANCE: prefers-reduced-motion — Accessibility + Low-end devices

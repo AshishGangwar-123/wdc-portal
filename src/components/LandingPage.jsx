@@ -75,26 +75,43 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
 
   // GSAP Master Timeline
   useEffect(() => {
-    const ctx = gsap.context(() => {
+    const isMobile = typeof window !== 'undefined' && (
+      window.innerWidth <= 768 ||
+      'ontouchstart' in window ||
+      navigator.maxTouchPoints > 0 ||
+      window.matchMedia('(pointer: coarse)').matches
+    );
 
-      // ─── HERO ENTRANCE ────────────────────────────────────────────
+    // Refresh ScrollTrigger so mobile viewports calculate positions accurately
+    setTimeout(() => {
+      try { ScrollTrigger.refresh(); } catch (e) {}
+    }, 200);
+
+    const ctx = gsap.context(() => {
+      if (isMobile) {
+        // On mobile devices, keep opacity 1 & skip hidden initial states to guarantee NO BLANK SPACES!
+        gsap.set(['.domain-card', '.why-card', '.section-heading-reveal', '.tech-pill-hero', '.hero-line', '.hero-sub', '.hero-btns'], { opacity: 1, y: 0, scale: 1 });
+        return;
+      }
+
+      // ─── HERO ENTRANCE (DESKTOP) ──────────────────────────────────
       const heroTL = gsap.timeline({ delay: 0.1 });
       heroTL
         .fromTo(heroBadgeRef.current,
           { scale: 0.6, opacity: 0, y: 30 },
           { scale: 1, opacity: 1, y: 0, duration: 0.9, ease: 'back.out(1.4)' }
         )
-        .fromTo(heroTitleRef.current.querySelectorAll('.hero-line'),
+        .fromTo(heroTitleRef.current?.querySelectorAll('.hero-line'),
           { y: 80, opacity: 0, rotateX: -25, skewY: 3 },
           { y: 0, opacity: 1, rotateX: 0, skewY: 0, duration: 1, stagger: 0.12, ease: 'power4.out' },
           '-=0.5'
         )
-        .fromTo(heroTitleRef.current.querySelector('.hero-sub'),
+        .fromTo(heroTitleRef.current?.querySelector('.hero-sub'),
           { y: 30, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' },
           '-=0.5'
         )
-        .fromTo(heroTitleRef.current.querySelector('.hero-btns'),
+        .fromTo(heroTitleRef.current?.querySelector('.hero-btns'),
           { y: 24, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' },
           '-=0.5'
