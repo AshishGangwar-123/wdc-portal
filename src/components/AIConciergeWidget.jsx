@@ -776,15 +776,16 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
             </div>
 
             {!userName && (
-              <form onSubmit={handleNameSubmit} style={{ marginTop: '12px', display: 'flex', gap: '8px' }}>
+              <form onSubmit={handleNameSubmit} style={{ marginTop: '12px', display: 'flex', gap: '8px', width: '100%', flexWrap: 'wrap' }}>
                 <input
                   type="text"
                   placeholder="Enter your name here..."
                   value={nameInput}
                   onChange={(e) => setNameInput(e.target.value)}
                   style={{
-                    flex: 1,
-                    padding: '8px 14px',
+                    flex: '1 1 180px',
+                    minWidth: 0,
+                    padding: '9px 14px',
                     borderRadius: '10px',
                     background: 'rgba(8, 9, 20, 0.9)',
                     border: '1px solid #00f2fe',
@@ -796,7 +797,7 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
                 <button
                   type="submit"
                   className="glass-btn glass-btn-primary"
-                  style={{ padding: '8px 14px', fontSize: '0.82rem' }}
+                  style={{ padding: '9px 18px', fontSize: '0.85rem', whiteSpace: 'nowrap', flexShrink: 0 }}
                 >
                   Save Name
                 </button>
