@@ -62,6 +62,15 @@ app.add_middleware(
 # Gzip Compression Middleware for 5x faster network transfers
 app.add_middleware(GZipMiddleware, minimum_size=500)
 
+# --- UPTIMEROBOT & RENDER HEALTH CHECK ENDPOINTS ---
+@app.get("/health")
+@app.head("/health")
+@app.get("/api/health")
+@app.head("/")
+def health_check():
+    """Ultra-fast health check endpoint for UptimeRobot, Render, and Keep-Alive pings."""
+    return {"status": "ok", "service": "WDC Portal API", "online": True}
+
 # --- Pydantic Models ---
 
 class AgentChatRequest(BaseModel):

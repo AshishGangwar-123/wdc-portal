@@ -12,9 +12,21 @@ load_dotenv(env_path)
 DB_URL = os.getenv("DATABASE_URL")
 
 def get_connection():
-    """Returns a PostgreSQL database connection with RealDictCursor enabled."""
-    conn = psycopg2.connect(DB_URL, cursor_factory=RealDictCursor)
-    return conn
+    """Returns a PostgreSQL database connection with RealDictCursor enabled and automatic retry."""
+    db_url = os.getenv("DATABASE_URL") or DB_URL
+    if not db_url:
+        raise ValueError("DATABASE_URL environment variable is not set on Render!")
+    
+    try:
+        conn = psycopg2.connect(db_url, cursor_factory=RealDictCursor, connect_timeout=10)
+        return conn
+    except Exception as e:
+        # Retry connection once in case of temporary network glitch
+        try:
+            conn = psycopg2.connect(db_url, cursor_factory=RealDictCursor, connect_timeout=10)
+            return conn
+        except Exception:
+            raise e
 
 def init_db():
     """Initializes PostgreSQL database tables and seeds default WDC data if empty."""
