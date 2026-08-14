@@ -19,6 +19,13 @@ export default function TeamDeck3D() {
   const [activeIdx, setActiveIdx] = useState(0);
   const [isFanned, setIsFanned] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 640 : false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     fetch(`${API_BASE}/api/team`)
@@ -53,10 +60,10 @@ export default function TeamDeck3D() {
   };
 
   return (
-    <section id="team" style={{ padding: '80px 24px', maxWidth: '1280px', margin: '0 auto', position: 'relative', zIndex: 3 }}>
+    <section id="team" style={{ padding: isMobile ? '40px 16px' : '80px 24px', maxWidth: '1280px', margin: '0 auto', position: 'relative', zIndex: 3 }}>
       
       {/* Header */}
-      <div className="section-heading-reveal" style={{ textAlign: 'center', marginBottom: '50px' }}>
+      <div className="section-heading-reveal" style={{ textAlign: 'center', marginBottom: isMobile ? '30px' : '50px' }}>
         <div
           className="section-tag"
           style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 18px', borderRadius: '99px', background: 'rgba(0, 242, 254, 0.08)', border: '1px solid rgba(0, 242, 254, 0.3)', color: '#00f2fe', fontSize: '0.82rem', marginBottom: '14px' }}
@@ -64,15 +71,15 @@ export default function TeamDeck3D() {
           <Sparkles size={14} color="#00f2fe" />
           <span>WDC CORE TEAM SHOWCASE</span>
         </div>
-        <h2 style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)', fontWeight: 900, color: '#fff', letterSpacing: '-1.5px', marginBottom: '12px' }}>
+        <h2 style={{ fontSize: 'clamp(1.8rem, 4.5vw, 3.5rem)', fontWeight: 900, color: '#fff', letterSpacing: '-1.5px', marginBottom: '12px' }}>
           Meet Our <span className="text-gradient">Core Team</span> Members
         </h2>
-        <p style={{ color: '#94a3b8', fontSize: '1rem', maxWidth: '600px', margin: '0 auto', lineHeight: 1.6 }}>
+        <p style={{ color: '#94a3b8', fontSize: '0.92rem', maxWidth: '600px', margin: '0 auto', lineHeight: 1.6 }}>
           Interactive 3D Playing Cards Deck — Hover & click on cards to fan out the core members of Web Development Club.
         </p>
 
         {/* Deck Controls */}
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '16px', marginTop: '24px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '16px', marginTop: '24px', flexWrap: 'wrap' }}>
           <button
             onClick={() => setIsFanned(!isFanned)}
             className="glass-btn"
@@ -118,14 +125,14 @@ export default function TeamDeck3D() {
         onMouseLeave={() => { setIsFanned(false); setIsPaused(false); }}
         style={{
           perspective: '1200px',
-          minHeight: '440px',
+          minHeight: isMobile ? '360px' : '440px',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           position: 'relative',
           margin: '20px auto 40px',
           maxWidth: '100%',
-          overflow: 'visible',
+          overflow: 'hidden',
         }}
       >
         {members.map((member, idx) => {
@@ -134,11 +141,11 @@ export default function TeamDeck3D() {
           const isCenter = idx === activeIdx;
 
           // 3D Rotational & Fan-out Math
-          let rotateZ = isFanned ? offset * 18 : offset * 9;
-          let translateX = isFanned ? offset * 140 : offset * 75;
-          let translateY = isFanned ? Math.abs(offset) * 18 : Math.abs(offset) * 10;
-          let rotateY = isFanned ? offset * -8 : offset * -3;
-          let scale = isCenter ? 1.06 : 0.94 - Math.abs(offset) * 0.04;
+          let rotateZ = isFanned ? (isMobile ? offset * 7 : offset * 18) : (isMobile ? offset * 4 : offset * 9);
+          let translateX = isFanned ? (isMobile ? offset * 42 : offset * 140) : (isMobile ? offset * 22 : offset * 75);
+          let translateY = isFanned ? Math.abs(offset) * 10 : Math.abs(offset) * 10;
+          let rotateY = isFanned ? offset * -4 : offset * -3;
+          let scale = isCenter ? (isMobile ? 1.02 : 1.06) : (isMobile ? 0.92 : 0.94) - Math.abs(offset) * 0.04;
           let zIndex = isCenter ? 50 : 30 - Math.abs(offset);
 
           return (
@@ -147,8 +154,8 @@ export default function TeamDeck3D() {
               onClick={() => setActiveIdx(idx)}
               style={{
                 position: 'absolute',
-                width: '270px',
-                height: '380px',
+                width: isMobile ? '230px' : '270px',
+                height: isMobile ? '330px' : '380px',
                 borderRadius: '20px',
                 background: isCenter
                   ? 'linear-gradient(145deg, rgba(16, 24, 48, 0.95) 0%, rgba(8, 12, 28, 0.98) 100%)'

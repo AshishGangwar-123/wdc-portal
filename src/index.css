@@ -597,6 +597,31 @@ img, video, canvas, svg, iframe {
   }
 }
 
+/* AI Concierge Chatbot Responsive Grid */
+.ai-concierge-grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  padding: 24px;
+  gap: 24px;
+  min-height: 480px;
+}
+
+@media (max-width: 850px) {
+  .ai-concierge-grid {
+    grid-template-columns: 1fr !important;
+    padding: 14px !important;
+    gap: 14px !important;
+    min-height: auto !important;
+    border-radius: 20px !important;
+  }
+
+  /* Left bot avatar column compact layout on mobile */
+  .ai-concierge-grid > div:first-child {
+    padding: 14px !important;
+    border-radius: 18px !important;
+  }
+}
+
 /* Tablet & Mobile Nav Breakpoint (860px) */
 @media (max-width: 860px) {
   .desktop-nav-links,
@@ -665,16 +690,16 @@ img, video, canvas, svg, iframe {
 
   /* Full screen modals for mobile */
   div[style*="position: fixed"][style*="z-index"] > div {
-    width: 96vw !important;
+    width: 95vw !important;
     max-height: 94vh !important;
-    padding: 16px !important;
+    padding: 14px !important;
     border-radius: 18px !important;
   }
 
   /* Section padding scale */
   section {
-    padding-top: 30px !important;
-    padding-bottom: 30px !important;
+    padding-top: 24px !important;
+    padding-bottom: 24px !important;
   }
 
   /* Text wrap & line breaks */

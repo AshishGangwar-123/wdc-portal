@@ -521,16 +521,17 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
             if (e.target === e.currentTarget && onClose) onClose();
           }}
         >
-          <div style={{ position: 'relative', width: '100%', maxWidth: '1050px', maxHeight: '92vh', overflowY: 'auto', borderRadius: '32px' }}>
+          <div style={{ position: 'relative', width: '100%', maxWidth: '1050px', maxHeight: '92vh', overflowY: 'auto', borderRadius: '24px' }}>
             {onClose && (
               <button
                 onClick={onClose}
+                aria-label="Close AI Concierge"
                 style={{
                   position: 'absolute',
-                  top: '-18px',
-                  right: '-18px',
-                  width: '40px',
-                  height: '40px',
+                  top: '12px',
+                  right: '12px',
+                  width: '36px',
+                  height: '36px',
                   borderRadius: '50%',
                   background: 'rgba(8, 9, 20, 0.95)',
                   border: '1.5px solid rgba(0, 242, 254, 0.5)',
@@ -539,14 +540,14 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  zIndex: 10,
+                  zIndex: 100,
                   boxShadow: '0 0 20px rgba(0, 242, 254, 0.3)',
                   transition: 'all 0.2s ease',
                 }}
                 onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                 onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
               >
-                <X size={20} color="#00f2fe" />
+                <X size={18} color="#00f2fe" />
               </button>
             )}
             {children}
@@ -564,17 +565,12 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
       style={{
         width: '100%',
         maxWidth: '1050px',
-        minHeight: '480px',
-        borderRadius: '32px',
+        borderRadius: '24px',
         background: 'linear-gradient(160deg, rgba(16, 20, 48, 0.9) 0%, rgba(8, 10, 24, 0.97) 100%)',
         border: '1.5px solid rgba(0, 242, 254, 0.35)',
         boxShadow: '0 30px 80px rgba(0, 0, 0, 0.7), 0 0 50px rgba(0, 242, 254, 0.15)',
-        display: 'grid',
-        gridTemplateColumns: '380px 1fr',
         position: 'relative',
         overflow: 'hidden',
-        padding: '24px',
-        gap: '24px',
       }}
     >
       {/* LEFT COLUMN: ANIMATED CARTOON BOT + VOICE SPEECH ENGINE */}
