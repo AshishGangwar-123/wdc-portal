@@ -189,6 +189,8 @@ export default function MediaGalleryBox() {
               key={currentItem.url}
               src={currentItem.url}
               alt={currentItem.title}
+              loading="eager"
+              decoding="async"
               style={{
                 width: '100%',
                 height: '100%',
