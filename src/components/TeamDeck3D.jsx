@@ -128,10 +128,10 @@ export default function TeamDeck3D() {
 
       {/* 3D Playing Cards Stage */}
       <div
-        onMouseEnter={() => { setIsFanned(true); setIsPaused(true); }}
-        onMouseLeave={() => { setIsFanned(false); setIsPaused(false); }}
+        onMouseEnter={() => { if (!isMobile) { setIsFanned(true); setIsPaused(true); } }}
+        onMouseLeave={() => { if (!isMobile) { setIsFanned(false); setIsPaused(false); } }}
         style={{
-          perspective: '1200px',
+          perspective: isMobile ? 'none' : '1200px',
           minHeight: isMobile ? '360px' : '440px',
           display: 'flex',
           justifyContent: 'center',
@@ -147,13 +147,16 @@ export default function TeamDeck3D() {
           const suit = SUITS[idx % SUITS.length];
           const isCenter = idx === activeIdx;
 
-          // 3D Rotational & Fan-out Math
-          let rotateZ = isFanned ? (isMobile ? offset * 7 : offset * 18) : (isMobile ? offset * 4 : offset * 9);
-          let translateX = isFanned ? (isMobile ? offset * 42 : offset * 140) : (isMobile ? offset * 22 : offset * 75);
-          let translateY = isFanned ? Math.abs(offset) * 10 : Math.abs(offset) * 10;
-          let rotateY = isFanned ? offset * -4 : offset * -3;
+          // Smooth 2D math for mobile phones, full 3D Rotational & Fan-out Math for desktop
+          let rotateZ = isMobile ? 0 : (isFanned ? offset * 18 : offset * 9);
+          let translateX = isMobile ? (isFanned ? offset * 45 : offset * 26) : (isFanned ? offset * 140 : offset * 75);
+          let translateY = isMobile ? 0 : (isFanned ? Math.abs(offset) * 10 : Math.abs(offset) * 10);
+          let rotateY = isMobile ? 0 : (isFanned ? offset * -4 : offset * -3);
           let scale = isCenter ? (isMobile ? 1.02 : 1.06) : (isMobile ? 0.92 : 0.94) - Math.abs(offset) * 0.04;
           let zIndex = isCenter ? 50 : 30 - Math.abs(offset);
+
+          // On mobile, skip rendering far hidden cards to save DOM & GPU work
+          if (isMobile && Math.abs(offset) > 2) return null;
 
           return (
             <div
@@ -174,7 +177,7 @@ export default function TeamDeck3D() {
                 backdropFilter: isMobile ? 'none' : 'blur(16px)',
                 cursor: 'pointer',
                 transform: `translateX(${translateX}px) translateY(${translateY}px) rotateZ(${rotateZ}deg) rotateY(${rotateY}deg) scale(${scale})`,
-                transition: 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
                 willChange: 'transform',
                 zIndex: zIndex,
                 padding: '16px',

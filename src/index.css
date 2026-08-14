@@ -838,17 +838,26 @@ img, video, canvas, svg, iframe {
   /* Simplify orb animations on mobile — reduce GPU composite layers */
   .bg-orb {
     animation: none !important;
-    filter: blur(50px) !important;
-    opacity: 0.18 !important;
+    filter: blur(40px) !important;
+    opacity: 0.12 !important;
   }
 
-  /* Disable expensive backdrop blurs on mobile devices to prevent GPU rendering lag */
+  /* Disable expensive backdrop blurs globally on mobile to eliminate video overlay text lag */
+  *, *::before, *::after {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
   .glass-panel,
   .float-badge,
   .glass-btn {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    background: rgba(14, 16, 38, 0.94) !important;
+    background: rgba(14, 16, 38, 0.96) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  /* Eliminate image/video filter blur calculations on mobile */
+  img, video {
+    filter: none !important;
   }
 
   /* Guarantee elements are never hidden by GSAP scroll triggers on mobile viewports */
@@ -858,6 +867,7 @@ img, video, canvas, svg, iframe {
   .hero-line,
   .hero-sub,
   .hero-btns,
+  .stat-card,
   .gsap-reveal,
   .gsap-reveal-left,
   .gsap-reveal-right,

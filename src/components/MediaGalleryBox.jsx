@@ -72,8 +72,9 @@ export default function MediaGalleryBox() {
     return () => clearInterval(interval);
   }, [mediaList]);
 
-  // 4. Interactive Mouse Scale & Dynamic 3D Size Distortion
+  // 4. Interactive Mouse Scale & Dynamic 3D Size Distortion (Desktop Only)
   const handleMouseEnter = () => {
+    if (window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768) return;
     if (cardRef.current) {
       gsap.to(cardRef.current, {
         scale: 1.05,
@@ -85,13 +86,13 @@ export default function MediaGalleryBox() {
   };
 
   const handleMouseMove = (e) => {
+    if (window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768) return;
     const card = cardRef.current;
     if (!card) return;
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
 
-    // Calculate distance from center for dynamic elastic size pulse
     const dist = Math.sqrt(x * x + y * y);
     const maxDist = Math.sqrt((rect.width / 2) ** 2 + (rect.height / 2) ** 2);
     const dynamicScale = 1.04 + (dist / maxDist) * 0.03;
@@ -108,6 +109,7 @@ export default function MediaGalleryBox() {
   };
 
   const handleMouseLeave = () => {
+    if (window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768) return;
     if (cardRef.current) {
       gsap.to(cardRef.current, {
         rotateY: 0,
@@ -136,7 +138,7 @@ export default function MediaGalleryBox() {
         position: 'relative',
       }}
     >
-      {/* Outer Border Glowing Card Wrapper with Increased Height (340px) */}
+      {/* Outer Border Glowing Card Wrapper */}
       <div
         ref={cardRef}
         onMouseEnter={handleMouseEnter}
@@ -145,9 +147,9 @@ export default function MediaGalleryBox() {
         style={{
           position: 'relative',
           width: '100%',
-          height: '340px', // Increased height for rich cinematic display!
+          height: '340px',
           borderRadius: '24px',
-          padding: '2px', // For animated gradient border
+          padding: '2px',
           background: 'linear-gradient(135deg, rgba(0, 242, 254, 0.5), rgba(121, 40, 202, 0.5), rgba(255, 0, 122, 0.5))',
           boxShadow: '0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 242, 254, 0.15)',
           transition: 'box-shadow 0.3s ease',
@@ -195,7 +197,7 @@ export default function MediaGalleryBox() {
             />
           )}
 
-          {/* Low-Intensity Theme Color Layer (Blends media into WDC Neon aesthetic) */}
+          {/* Low-Intensity Theme Color Layer */}
           <div
             style={{
               position: 'absolute',
@@ -216,7 +218,7 @@ export default function MediaGalleryBox() {
             }}
           />
 
-          {/* Top Header Badge Overlay */}
+          {/* Top Header Badge Overlay (Crisp Solid Background for 0 GPU Video Compositing Lag) */}
           <div
             style={{
               position: 'absolute',
@@ -224,7 +226,7 @@ export default function MediaGalleryBox() {
               left: '18px',
               right: '18px',
               display: 'flex',
-              justify: 'space-between',
+              justifyContent: 'space-between',
               alignItems: 'center',
               zIndex: 3,
             }}
@@ -236,8 +238,7 @@ export default function MediaGalleryBox() {
                 gap: '6px',
                 padding: '6px 14px',
                 borderRadius: '99px',
-                background: 'rgba(5, 6, 20, 0.8)',
-                backdropFilter: 'blur(12px)',
+                background: 'rgba(5, 6, 20, 0.94)',
                 border: '1px solid rgba(0, 242, 254, 0.4)',
                 fontSize: '0.75rem',
                 fontWeight: 700,
@@ -256,8 +257,7 @@ export default function MediaGalleryBox() {
                 gap: '6px',
                 padding: '5px 12px',
                 borderRadius: '99px',
-                background: 'rgba(255, 0, 122, 0.25)',
-                backdropFilter: 'blur(12px)',
+                background: 'rgba(255, 0, 122, 0.35)',
                 border: '1px solid rgba(255, 0, 122, 0.4)',
                 fontSize: '0.72rem',
                 fontWeight: 700,

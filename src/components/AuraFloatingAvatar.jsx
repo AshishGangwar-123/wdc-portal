@@ -156,7 +156,7 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
         top: '10px',
         left: '50%',
         width: '260px',
-        background: 'rgba(8, 9, 20, 0.94)',
+        background: 'rgba(8, 9, 20, 0.96)',
         border: '1px solid rgba(0, 242, 254, 0.45)',
         borderRadius: '16px',
         padding: '12px 16px',
@@ -164,7 +164,6 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
         color: '#e2e8f0',
         lineHeight: 1.5,
         zIndex: 20,
-        backdropFilter: 'blur(12px)',
         boxShadow: '0 12px 40px rgba(0, 242, 254, 0.2)',
         pointerEvents: 'none',
         opacity: showBubble ? 1 : 0,
@@ -219,11 +218,6 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
             height: '220px',
             objectFit: 'contain',
             zIndex: 2,
-            filter: isSpeaking
-              ? 'drop-shadow(0 0 25px rgba(0, 242, 254, 0.75)) drop-shadow(0 0 40px rgba(121, 40, 202, 0.4))'
-              : isHovered
-              ? 'drop-shadow(0 0 18px rgba(0, 242, 254, 0.5))'
-              : 'drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4))',
             animation: isSpeaking
               ? 'talkBounce 0.55s ease-in-out infinite alternate'
               : 'idleFloat 3.5s ease-in-out infinite alternate',
