@@ -63,10 +63,9 @@ app.add_middleware(
 app.add_middleware(GZipMiddleware, minimum_size=500)
 
 # --- UPTIMEROBOT & RENDER HEALTH CHECK ENDPOINTS ---
-@app.get("/health")
-@app.head("/health")
-@app.get("/api/health")
-@app.head("/")
+@app.api_route("/health", methods=["GET", "HEAD", "OPTIONS", "POST"])
+@app.api_route("/api/health", methods=["GET", "HEAD", "OPTIONS", "POST"])
+@app.api_route("/", methods=["GET", "HEAD", "OPTIONS"])
 def health_check():
     """Ultra-fast health check endpoint for UptimeRobot, Render, and Keep-Alive pings."""
     return {"status": "ok", "service": "WDC Portal API", "online": True}
@@ -565,7 +564,7 @@ if os.path.exists(dist_dir):
     if os.path.exists(assets_dir):
         app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
 
-    @app.get("/{full_path:path}")
+    @app.api_route("/{full_path:path}", methods=["GET", "HEAD", "OPTIONS"])
     def serve_react_app(full_path: str):
         if full_path.startswith("api/"):
             raise HTTPException(status_code=404, detail="API endpoint not found")
