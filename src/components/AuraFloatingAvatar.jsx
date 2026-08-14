@@ -51,7 +51,7 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
         }
 
         const utter = new SpeechSynthesisUtterance(
-          "नमस्ते! मैं हूँ औरा, वेब डेवलपमेंट क्लब की ए०आई० असिस्टेंट। आप मुझसे बोलकर या चैट करके बात कर सकते हैं!"
+          "नमस्ते! मैं हूँ औरा, वेब डेवलपमेंट क्लब की ए आई असिस्टेंट। आप मुझसे बोलकर या चैट करके बात कर सकते हैं!"
         );
         utter.lang = 'hi-IN';
         utter.rate = 0.92;
