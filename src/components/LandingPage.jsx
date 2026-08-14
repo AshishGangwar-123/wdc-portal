@@ -113,7 +113,7 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
       heroTL
         .fromTo(heroBadgeRef.current,
           { scale: 0.6, opacity: 0, y: 30 },
-          { scale: 1, opacity: 1, y: 0, duration: 0.9, ease: 'back.out(2)' }
+          { scale: 1, opacity: 1, y: 0, duration: 0.9, ease: 'back.out(1.4)' }
         )
         .fromTo(heroTitleRef.current.querySelectorAll('.hero-line'),
           { y: 80, opacity: 0, rotateX: -25, skewY: 3 },
@@ -243,7 +243,7 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
   }, []);
 
   return (
-    <div style={{ position: 'relative', width: '100%', paddingTop: '110px', paddingBottom: '0px', background: 'var(--bg-dark)', overflow: 'hidden' }}>
+    <div style={{ position: 'relative', width: '100%', paddingTop: '135px', paddingBottom: '0px', background: 'var(--bg-dark)', overflow: 'hidden' }}>
 
       {/* Rich Background System */}
       <FloatingCodeElements />
@@ -265,7 +265,7 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
         id="hero"
         className="hero-grid"
         style={{
-          maxWidth: '1350px', margin: '0 auto', padding: '0 24px',
+          maxWidth: '1350px', margin: '0 auto', padding: '24px 24px 0 24px',
           display: 'grid', gridTemplateColumns: '1fr 1.25fr',
           gap: '36px', alignItems: 'flex-start',
           minHeight: 'calc(100vh - 180px)', position: 'relative', zIndex: 2,
@@ -413,7 +413,7 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
         </div>
 
         {/* Right Column — AI Concierge Widget & GSAP Animated Media Showcase */}
-        <div id="ai-concierge" ref={heroRightRef} style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative", paddingTop: "4px", width: "100%" }}>
+        <div id="ai-concierge" ref={heroRightRef} style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative", paddingTop: "16px", width: "100%" }}>
           {/* Decorative glow behind widget */}
           <div style={{
             position: 'absolute', inset: '-40px',

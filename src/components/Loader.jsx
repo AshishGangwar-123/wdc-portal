@@ -36,19 +36,18 @@ export default function Loader({ onComplete }) {
           }
         },
         onComplete: () => {
+          // Notify app immediately so components render and speech triggers with 0 delay
+          if (onComplete) onComplete();
+
           // Final curtain reveal exit animation
-          const exitTl = gsap.timeline({
-            onComplete: () => {
-              if (onComplete) onComplete();
-            },
-          });
+          const exitTl = gsap.timeline();
 
           exitTl
             .to(loaderRef.current, {
               scale: 1.05,
               opacity: 0,
               filter: 'blur(10px)',
-              duration: 0.6,
+              duration: 0.5,
               ease: 'power3.in',
             })
             .to(loaderRef.current, {

@@ -40,9 +40,10 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
     if (!isSiteLoaded || hasGreeted) return;
 
     setHasGreeted(true);
+    let spoken = false;
 
-    const triggerVoiceGreeting = () => {
-      if (!('speechSynthesis' in window)) return;
+    const speakNow = () => {
+      if (spoken || !('speechSynthesis' in window)) return;
       try {
         window.speechSynthesis.cancel();
         const utter = new SpeechSynthesisUtterance(
@@ -57,9 +58,9 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
         if (hindiVoice) utter.voice = hindiVoice;
 
         utter.onstart = () => {
+          spoken = true;
           setIsSpeaking(true);
           setShowBubble(true);
-          typeWriter(welcomeText);
         };
 
         utter.onend = () => {
@@ -72,13 +73,22 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
         };
 
         window.speechSynthesis.speak(utter);
+        spoken = true;
       } catch (e) {
         setIsSpeaking(false);
       }
     };
 
+    // Show speech bubble & start typewriter immediately when loader finishes
+    setShowBubble(true);
+    typeWriter(welcomeText);
+
+    // Call voice greeting immediately!
+    speakNow();
+
+    // Backup gesture listener in case browser blocked autoplay audio before user interaction
     const unlockAndSpeak = () => {
-      triggerVoiceGreeting();
+      if (!spoken) speakNow();
       window.removeEventListener('click', unlockAndSpeak);
       window.removeEventListener('keydown', unlockAndSpeak);
       window.removeEventListener('touchstart', unlockAndSpeak);
@@ -89,9 +99,6 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
     window.addEventListener('keydown', unlockAndSpeak, { once: true });
     window.addEventListener('touchstart', unlockAndSpeak, { once: true });
     window.addEventListener('scroll', unlockAndSpeak, { once: true });
-
-    setShowBubble(true);
-    typeWriter(welcomeText);
 
     return () => {
       clearTimeout(bubbleTimeout.current);
@@ -138,7 +145,7 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
       {/* Speech Bubble */}
       <div style={{
         position: 'absolute',
-        top: '0px',
+        top: '10px',
         left: '50%',
         width: '260px',
         background: 'rgba(8, 9, 20, 0.94)',
@@ -170,7 +177,7 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         style={{
-          marginTop: showBubble ? '110px' : '10px',
+          marginTop: showBubble ? '120px' : '10px',
           transition: 'margin-top 0.4s ease, transform 0.3s ease',
           position: 'relative',
           cursor: 'pointer',
