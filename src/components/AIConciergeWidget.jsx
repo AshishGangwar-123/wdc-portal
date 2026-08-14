@@ -527,6 +527,7 @@ export default function AIConciergeWidget({ isSiteLoaded, isOpen, onClose }) {
               <button
                 onClick={onClose}
                 aria-label="Close AI Concierge"
+                className="ai-concierge-close-btn"
                 style={{
                   position: 'absolute',
                   top: '12px',
