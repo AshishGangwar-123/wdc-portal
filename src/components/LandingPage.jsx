@@ -252,12 +252,12 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
             & <span className="text-gradient-pink">Grow Together</span>
           </h1>
 
-          {/* Typewriter subtitle (Pre-allocated reserved height so layout never shifts) */}
+          {/* Typewriter subtitle */}
           <div
             className="hero-sub"
             style={{ marginBottom: '16px', fontSize: '1.1rem', color: '#94a3b8', minHeight: '3.6em', lineHeight: 1.5, display: 'block' }}
           >
-            The official tech club of RECB Banda, conducting expert-led{' '}
+            Official tech club of RECB Banda, hosting{' '}
             <TypewriterText />
           </div>
 
