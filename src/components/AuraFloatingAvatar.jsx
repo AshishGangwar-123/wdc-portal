@@ -46,6 +46,10 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
       if (spoken || !('speechSynthesis' in window)) return;
       try {
         window.speechSynthesis.cancel();
+        if (window.speechSynthesis.resume) {
+          window.speechSynthesis.resume();
+        }
+
         const utter = new SpeechSynthesisUtterance(
           "Namaste! Main hun AURA. W D C ka A I Assistant. Aap mujhse bolkar ya chat karke baat kar sakte hain!"
         );
@@ -54,7 +58,7 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
         utter.pitch = 1.1;
 
         const voices = window.speechSynthesis.getVoices() || [];
-        const hindiVoice = voices.find(v => v.lang && v.lang.includes('hi'));
+        const hindiVoice = voices.find(v => v.lang && (v.lang.includes('hi') || v.lang.includes('IN')));
         if (hindiVoice) utter.voice = hindiVoice;
 
         utter.onstart = () => {
@@ -83,30 +87,24 @@ export default function AuraFloatingAvatar({ isSiteLoaded, onOpenChat }) {
     setShowBubble(true);
     typeWriter(welcomeText);
 
-    const isTouchDevice = typeof window !== 'undefined' && (
-      'ontouchstart' in window ||
-      navigator.maxTouchPoints > 0 ||
-      window.matchMedia('(pointer: coarse)').matches
-    );
+    // Call voice greeting immediately on all devices (Mobile & Desktop)
+    speakNow();
 
-    // Call voice greeting immediately on desktop, or wait for tap on mobile to comply with autoplay policy
-    if (!isTouchDevice) {
-      speakNow();
+    // Voices loaded listener for Chrome / Android WebKit
+    if ('speechSynthesis' in window && window.speechSynthesis.onvoiceschanged !== undefined) {
+      window.speechSynthesis.onvoiceschanged = () => {
+        if (!spoken) speakNow();
+      };
     }
 
-    // Backup gesture listener in case browser blocked autoplay audio before user interaction
+    // Backup gesture listener in case mobile browser blocked autoplay audio before user interaction
     const unlockAndSpeak = () => {
       if (!spoken) speakNow();
-      window.removeEventListener('click', unlockAndSpeak);
-      window.removeEventListener('keydown', unlockAndSpeak);
-      window.removeEventListener('touchstart', unlockAndSpeak);
-      window.removeEventListener('scroll', unlockAndSpeak);
     };
 
-    window.addEventListener('click', unlockAndSpeak, { once: true });
-    window.addEventListener('keydown', unlockAndSpeak, { once: true });
-    window.addEventListener('touchstart', unlockAndSpeak, { once: true });
-    window.addEventListener('scroll', unlockAndSpeak, { once: true });
+    ['touchstart', 'pointerdown', 'scroll', 'click', 'touchend'].forEach((evt) => {
+      window.addEventListener(evt, unlockAndSpeak, { once: true, passive: true });
+    });
 
     return () => {
       clearTimeout(bubbleTimeout.current);
