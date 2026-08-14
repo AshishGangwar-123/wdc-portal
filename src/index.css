@@ -597,6 +597,49 @@ img, video, canvas, svg, iframe {
   }
 }
 
+/* Section Tag Badge */
+.section-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 6px 18px !important;
+  border-radius: 99px !important;
+  background: rgba(0, 242, 254, 0.08) !important;
+  border: 1px solid rgba(0, 242, 254, 0.3) !important;
+  color: #00f2fe !important;
+  font-family: var(--font-heading) !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  max-width: 100% !important;
+}
+
+/* Workshop Showcase Card Grid */
+.workshop-showcase-panel {
+  padding: 56px;
+}
+
+.workshop-showcase-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+@media (max-width: 850px) {
+  .workshop-showcase-panel {
+    padding: 20px 16px !important;
+    border-radius: 20px !important;
+  }
+
+  .workshop-showcase-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+}
+
 /* AI Concierge Chatbot Responsive Grid */
 .ai-concierge-grid {
   display: grid;

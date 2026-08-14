@@ -591,9 +591,9 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
         style={{ maxWidth: '1300px', margin: '120px auto 0', padding: '0 24px', position: 'relative', zIndex: 2 }}
       >
         <div
-          className="glass-panel section-heading-reveal"
+          className="glass-panel workshop-showcase-panel section-heading-reveal"
           style={{
-            padding: '56px', position: 'relative', overflow: 'hidden',
+            position: 'relative', overflow: 'hidden',
             background: 'linear-gradient(135deg, rgba(0,242,254,0.06) 0%, rgba(121,40,202,0.08) 50%, rgba(255,0,122,0.04) 100%)',
             border: '1px solid rgba(0,242,254,0.15)',
           }}
@@ -615,7 +615,7 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
               </p>
             </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', alignItems: 'center', position: 'relative', zIndex: 1 }}>
+            <div className="workshop-showcase-grid" style={{ position: 'relative', zIndex: 1 }}>
               {(() => {
                 const featured = dbWorkshops[0];
                 const title = featured.title;
