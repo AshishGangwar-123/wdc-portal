@@ -31,12 +31,6 @@ export default function StatsCounterWidget() {
           if (hasAnimated) return;
           setHasAnimated(true);
 
-          // Stagger card entrance
-          gsap.fromTo('.stat-card',
-            { y: 50, opacity: 0, scale: 0.88 },
-            { y: 0, opacity: 1, scale: 1, duration: 0.75, stagger: 0.1, ease: 'back.out(1.4)' }
-          );
-
           // Counter animate numbers
           STATS.forEach((stat, index) => {
             const el = numberRefs.current[index];
@@ -99,7 +93,6 @@ export default function StatsCounterWidget() {
               cursor: 'default',
               position: 'relative',
               overflow: 'hidden',
-              opacity: 0,
             }}
           >
             {/* Background glow dot */}

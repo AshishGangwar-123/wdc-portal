@@ -36,24 +36,25 @@ export default function MediaGalleryBox() {
     fetchGallery();
   }, []);
 
-  // 2. GSAP ScrollTrigger Scroll-Driven Size & Scale Animation
+  // 2. GSAP ScrollTrigger Scroll-Driven Size & Scale Animation (Desktop Only)
   useEffect(() => {
     if (!containerRef.current || !cardRef.current) return;
+    const isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768;
+    if (isMobile) return;
 
     const ctx = gsap.context(() => {
-      // Scroll-driven size expansion: tied directly to page scroll movement!
       gsap.fromTo(
         cardRef.current,
-        { scale: 0.94, y: 25 },
+        { scale: 0.96, y: 15 },
         {
-          scale: 1.02,
-          y: -10,
+          scale: 1,
+          y: 0,
           ease: 'none',
           scrollTrigger: {
             trigger: containerRef.current,
             start: 'top 92%',
             end: 'bottom 15%',
-            scrub: 1, // Dynamic smooth scroll scrub animation!
+            scrub: 1,
           },
         }
       );

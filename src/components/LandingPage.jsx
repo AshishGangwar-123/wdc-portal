@@ -133,60 +133,13 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
         { scale: 1, opacity: 1, y: 0, duration: 0.5, stagger: 0.07, ease: 'back.out(1.5)', delay: 1.5 }
       );
 
-      // ─── MARQUEE SECTION ─────────────────────────────────────────
-      if (marqueeRef.current) {
-        gsap.fromTo(marqueeRef.current,
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-            scrollTrigger: { trigger: marqueeRef.current, start: 'top 90%', once: true }
-          }
-        );
-      }
-
-      // ─── DOMAINS SECTION STAGGER ─────────────────────────────────
-      if (domainsRef.current) {
-        gsap.fromTo('.domain-card',
-          { y: 40, opacity: 0, scale: 0.95 },
-          {
-            y: 0, opacity: 1, scale: 1, duration: 0.7, stagger: 0.08, ease: 'power3.out',
-            scrollTrigger: { trigger: domainsRef.current, start: 'top 85%', once: true }
-          }
-        );
-      }
-
-      // ─── WHY JOIN CARDS ───────────────────────────────────────────
-      if (whyJoinRef.current) {
-        gsap.fromTo('.why-card',
-          { y: 40, opacity: 0 },
-          {
-            y: 0, opacity: 1, duration: 0.7, stagger: 0.08, ease: 'power3.out',
-            scrollTrigger: { trigger: whyJoinRef.current, start: 'top 85%', once: true }
-          }
-        );
-      }
-
-      // ─── SECTION HEADINGS SPLIT REVEAL ───────────────────────────
-      gsap.utils.toArray('.section-heading-reveal').forEach((el) => {
-        gsap.fromTo(el,
-          { y: 30, opacity: 0 },
-          {
-            y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
-            scrollTrigger: { trigger: el, start: 'top 90%', once: true }
-          }
-        );
+      // Ensure all section elements are 100% visible and fully loaded
+      gsap.set(['.domain-card', '.why-card', '.section-heading-reveal', marqueeRef.current, ctaRef.current], {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        clearProps: 'opacity,transform',
       });
-
-      // ─── CTA SECTION ─────────────────────────────────────────────
-      if (ctaRef.current) {
-        gsap.fromTo(ctaRef.current,
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
-            scrollTrigger: { trigger: ctaRef.current, start: 'top 85%', once: true }
-          }
-        );
-      }
 
       // ─── DOMAIN CARD HOVER TILT ───────────────────────────────────
       document.querySelectorAll('.domain-card').forEach((card) => {
