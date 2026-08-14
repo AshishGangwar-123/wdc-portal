@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Sparkles, ExternalLink, ShieldCheck, ChevronLeft, ChevronRight, Layers } from 'lucide-react';
 
 const LinkedInIcon = ({ size = 12, color = 'currentColor' }) => (
@@ -29,6 +29,8 @@ export default function TeamDeck3D() {
   const [isPaused, setIsPaused] = useState(false);
   const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 640 : false);
 
+  const mobileSliderRef = useRef(null);
+
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 640);
     window.addEventListener('resize', handleResize);
@@ -55,6 +57,17 @@ export default function TeamDeck3D() {
     }, 3200);
     return () => clearInterval(interval);
   }, [members.length, isPaused]);
+
+  // Smooth Auto-scroll Infinite Carousel Loop on Mobile
+  useEffect(() => {
+    if (isMobile && mobileSliderRef.current) {
+      const cardWidth = 266;
+      mobileSliderRef.current.scrollTo({
+        left: activeIdx * cardWidth,
+        behavior: 'smooth',
+      });
+    }
+  }, [activeIdx, isMobile]);
 
   if (members.length === 0) return null;
 
@@ -129,6 +142,9 @@ export default function TeamDeck3D() {
       {/* Mobile Touch Slider OR Desktop 3D Playing Cards Stage */}
       {isMobile ? (
         <div
+          ref={mobileSliderRef}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setTimeout(() => setIsPaused(false), 2000)}
           style={{
             display: 'flex',
             gap: '16px',
