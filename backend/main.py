@@ -65,7 +65,6 @@ app.add_middleware(GZipMiddleware, minimum_size=500)
 # --- UPTIMEROBOT & RENDER HEALTH CHECK ENDPOINTS ---
 @app.api_route("/health", methods=["GET", "HEAD", "OPTIONS", "POST"])
 @app.api_route("/api/health", methods=["GET", "HEAD", "OPTIONS", "POST"])
-@app.api_route("/", methods=["GET", "HEAD", "OPTIONS"])
 def health_check():
     """Ultra-fast health check endpoint for UptimeRobot, Render, and Keep-Alive pings."""
     return {"status": "ok", "service": "WDC Portal API", "online": True}
