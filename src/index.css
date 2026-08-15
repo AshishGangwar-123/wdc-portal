@@ -56,12 +56,28 @@
 html, body {
   width: 100%;
   height: 100%;
+  max-width: 100vw;
   background-color: var(--bg-dark);
   color: var(--text-primary);
   font-family: var(--font-body);
   overflow-x: hidden;
   scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
   cursor: default;
+}
+
+/* GPU Hardware Acceleration & Smooth Mobile Touch Performance */
+button, a, select, input, [role="button"] {
+  touch-action: manipulation;
+}
+
+.glass-panel, .glass-btn, .gameroom-lang-card, .domain-card, .hero-grid {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 /* Custom Scrollbar */

@@ -1,0 +1,878 @@
+/* ==========================================================================
+   CodeFuel Game Room — Isolated Styles
+   All selectors scoped under .gameroom-* prefix to avoid any global leaks
+   ========================================================================== */
+
+/* ── Full Screen Container ──────────────────────────────────────────────── */
+.gameroom-overlay,
+.gameroom-overlay * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+.gameroom-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #030308;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  color: #f0f4ff;
+}
+
+/* ── Close Button ───────────────────────────────────────────────────────── */
+.gameroom-close-btn {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 10010;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(10, 12, 28, 0.85);
+  backdrop-filter: blur(16px);
+  color: #94a3b8;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+.gameroom-close-btn:hover {
+  background: rgba(255, 0, 80, 0.25);
+  border-color: rgba(255, 0, 80, 0.5);
+  color: #ff4d6d;
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LANGUAGE PICKER
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.gameroom-picker {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: radial-gradient(ellipse at 50% 40%, rgba(55, 118, 171, 0.12) 0%, transparent 60%),
+              radial-gradient(ellipse at 20% 80%, rgba(121, 40, 202, 0.08) 0%, transparent 50%),
+              #030308;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 40px 16px 60px 16px;
+}
+
+.gameroom-picker-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.6rem, 5vw, 3.2rem);
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 0.3em;
+  letter-spacing: -1px;
+  margin-top: 10px;
+}
+
+.gameroom-picker-subtitle {
+  font-size: clamp(0.8rem, 2vw, 1.1rem);
+  color: #64748b;
+  text-align: center;
+  margin-bottom: 2em;
+  font-family: 'Fira Code', monospace;
+  max-width: 500px;
+}
+
+.gameroom-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 190px));
+  gap: 18px;
+  justify-content: center;
+  padding: 0 20px 40px 20px;
+  max-width: 900px;
+  width: 100%;
+}
+
+/* Language Card */
+.gameroom-lang-card {
+  position: relative;
+  padding: 28px 20px;
+  border-radius: 20px;
+  border: 1.5px solid rgba(255,255,255,0.06);
+  background: rgba(12, 14, 38, 0.7);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
+}
+
+.gameroom-lang-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.gameroom-lang-card:hover:not(.gameroom-lang-locked) {
+  transform: translateY(-8px) scale(1.03);
+  border-color: var(--card-glow-color, rgba(0, 242, 254, 0.4));
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4),
+              0 0 40px var(--card-glow-color, rgba(0, 242, 254, 0.15));
+}
+
+.gameroom-lang-card:hover:not(.gameroom-lang-locked)::before {
+  opacity: 1;
+  background: radial-gradient(circle at 50% 30%, var(--card-glow-color, rgba(0, 242, 254, 0.08)) 0%, transparent 70%);
+}
+
+.gameroom-lang-locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.4);
+}
+
+.gameroom-lang-icon {
+  font-size: 2.8rem;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.gameroom-lang-name {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-bottom: 4px;
+}
+
+.gameroom-lang-tag {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  color: #64748b;
+}
+
+.gameroom-lock-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 0.65rem;
+  color: #64748b;
+  font-family: 'Fira Code', monospace;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   GAME HUD
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.gameroom-hud {
+  position: fixed;
+  inset: 0;
+  z-index: 10002;
+  pointer-events: none;
+  font-family: 'Outfit', sans-serif;
+}
+
+.gameroom-hud > * {
+  pointer-events: auto;
+}
+
+/* Top Bar */
+.gameroom-hud-top {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Fuel Gauge */
+.gameroom-fuel-container {
+  flex: 1;
+  max-width: 340px;
+}
+
+.gameroom-fuel-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #94a3b8;
+  margin-bottom: 6px;
+  font-family: 'Fira Code', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.gameroom-fuel-bar-outer {
+  width: 100%;
+  height: 14px;
+  border-radius: 10px;
+  background: rgba(10, 12, 30, 0.8);
+  border: 1px solid rgba(255,255,255,0.08);
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.gameroom-fuel-bar-inner {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.3s ease, background 0.5s ease;
+  position: relative;
+  box-shadow: 0 0 12px var(--fuel-glow, rgba(16, 185, 129, 0.4));
+}
+
+.gameroom-fuel-bar-inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 60%);
+}
+
+/* Score Display */
+.gameroom-score-box {
+  text-align: right;
+  min-width: 120px;
+}
+
+.gameroom-score-label {
+  font-size: 0.65rem;
+  color: #64748b;
+  font-family: 'Fira Code', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 2px;
+}
+
+.gameroom-score-value {
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, #00f2fe, #7928ca);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Combo Display */
+.gameroom-combo-container {
+  position: absolute;
+  top: 70px;
+  right: 16px;
+  text-align: right;
+}
+
+.gameroom-combo-value {
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: -2px;
+  line-height: 1;
+  transition: all 0.2s ease;
+}
+
+.gameroom-combo-label {
+  font-size: 0.6rem;
+  color: #64748b;
+  font-family: 'Fira Code', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Bottom Stats */
+.gameroom-hud-bottom {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.gameroom-stat-item {
+  text-align: center;
+  padding: 8px 14px;
+  border-radius: 12px;
+  background: rgba(10, 12, 30, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.gameroom-stat-value {
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.gameroom-stat-label {
+  font-size: 0.55rem;
+  color: #64748b;
+  font-family: 'Fira Code', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Difficulty Badge */
+.gameroom-difficulty-badge {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 18px;
+  border-radius: 12px;
+  background: rgba(10, 12, 30, 0.8);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* Sound Toggle */
+.gameroom-sound-btn {
+  position: absolute;
+  top: 16px;
+  right: 66px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(10, 12, 30, 0.7);
+  backdrop-filter: blur(10px);
+  color: #94a3b8;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 10010;
+}
+.gameroom-sound-btn:hover {
+  background: rgba(0, 242, 254, 0.12);
+  color: #00f2fe;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   QUESTION PANEL
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.gameroom-question-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10005;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: none;
+  padding: 16px;
+}
+
+.gameroom-question-panel {
+  pointer-events: auto;
+  width: 100%;
+  max-width: 600px;
+  background: rgba(8, 10, 28, 0.95);
+  backdrop-filter: blur(28px);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 -20px 60px rgba(0,0,0,0.5),
+              0 0 40px rgba(0, 242, 254, 0.05);
+  margin-bottom: 20px;
+}
+
+.gameroom-question-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.gameroom-question-tier {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.gameroom-question-timer {
+  width: 100%;
+  height: 4px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.06);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.gameroom-question-timer-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.1s linear;
+}
+
+.gameroom-question-text {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.gameroom-question-code {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  color: #e2e8f0;
+}
+
+/* Syntax Highlighting */
+.gameroom-syn-kw { color: #c792ea; font-weight: 600; }
+.gameroom-syn-fn { color: #82aaff; }
+.gameroom-syn-str { color: #c3e88d; }
+.gameroom-syn-num { color: #f78c6c; }
+.gameroom-syn-cmt { color: #546e7a; font-style: italic; }
+.gameroom-syn-op { color: #89ddff; }
+.gameroom-syn-bool { color: #ff5370; }
+.gameroom-syn-cls { color: #ffcb6b; }
+.gameroom-syn-dec { color: #c792ea; }
+.gameroom-syn-self { color: #f07178; font-style: italic; }
+.gameroom-syn-blank { 
+  background: rgba(0, 242, 254, 0.15);
+  color: #00f2fe;
+  padding: 2px 12px;
+  border-radius: 6px;
+  border: 1px dashed rgba(0, 242, 254, 0.3);
+}
+
+/* Answer Options */
+.gameroom-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.gameroom-option-btn {
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1.5px solid rgba(255,255,255,0.08);
+  background: rgba(14, 16, 40, 0.7);
+  color: #e2e8f0;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.gameroom-option-btn:hover:not(:disabled) {
+  border-color: rgba(0, 242, 254, 0.4);
+  background: rgba(0, 242, 254, 0.08);
+  transform: translateY(-2px);
+}
+
+.gameroom-option-btn:disabled {
+  cursor: not-allowed;
+}
+
+.gameroom-option-correct {
+  border-color: rgba(16, 185, 129, 0.7) !important;
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #10b981 !important;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.gameroom-option-wrong {
+  border-color: rgba(255, 0, 80, 0.7) !important;
+  background: rgba(255, 0, 80, 0.12) !important;
+  color: #ff4d6d !important;
+}
+
+.gameroom-explanation {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(0, 242, 254, 0.06);
+  border: 1px solid rgba(0, 242, 254, 0.12);
+  font-size: 0.78rem;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   GAME OVER SCREEN
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.gameroom-gameover {
+  position: fixed;
+  inset: 0;
+  z-index: 10008;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at 50% 50%, rgba(255, 0, 80, 0.08) 0%, rgba(3, 3, 8, 0.97) 60%);
+  backdrop-filter: blur(8px);
+  padding: 20px;
+}
+
+.gameroom-gameover-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(2.2rem, 8vw, 4rem);
+  font-weight: 900;
+  letter-spacing: -2px;
+  margin-bottom: 6px;
+  background: linear-gradient(135deg, #ff007a, #ff4d6d, #ff8fa3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gameroom-gameover-subtitle {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 2.5em;
+  font-family: 'Fira Code', monospace;
+}
+
+.gameroom-gameover-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 2.5em;
+  max-width: 400px;
+  width: 100%;
+}
+
+.gameroom-gameover-stat {
+  text-align: center;
+  padding: 18px 14px;
+  border-radius: 16px;
+  background: rgba(12, 14, 38, 0.8);
+  border: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(10px);
+}
+
+.gameroom-gameover-stat-value {
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: -1px;
+  margin-bottom: 4px;
+}
+
+.gameroom-gameover-stat-label {
+  font-size: 0.65rem;
+  color: #64748b;
+  font-family: 'Fira Code', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.gameroom-gameover-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.gameroom-btn-retry {
+  padding: 14px 36px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #00f2fe, #4facfe);
+  color: #030308;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: -0.3px;
+}
+
+.gameroom-btn-retry:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 12px 35px rgba(0, 242, 254, 0.3);
+}
+
+.gameroom-btn-home {
+  padding: 14px 36px;
+  border-radius: 14px;
+  border: 1.5px solid rgba(255,255,255,0.12);
+  background: rgba(14, 16, 40, 0.6);
+  color: #94a3b8;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.gameroom-btn-home:hover {
+  border-color: rgba(255,255,255,0.25);
+  color: #f0f4ff;
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   WARNING / CRITICAL FUEL OVERLAYS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.gameroom-fuel-warning {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  pointer-events: none;
+  border: 3px solid transparent;
+  transition: border-color 0.5s ease;
+}
+
+.gameroom-fuel-warning.warning {
+  border-color: rgba(255, 60, 60, 0.3);
+  box-shadow: inset 0 0 80px rgba(255, 0, 0, 0.08);
+  animation: gameroom-warning-pulse 1.5s ease-in-out infinite;
+}
+
+.gameroom-fuel-warning.critical {
+  border-color: rgba(255, 0, 0, 0.5);
+  box-shadow: inset 0 0 120px rgba(255, 0, 0, 0.15);
+  animation: gameroom-critical-pulse 0.7s ease-in-out infinite;
+}
+
+@keyframes gameroom-warning-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes gameroom-critical-pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VISUAL EFFECTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes gameroom-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.gameroom-shake {
+  animation: gameroom-shake 0.4s ease;
+}
+
+@keyframes gameroom-flash-green {
+  0% { box-shadow: inset 0 0 100px rgba(16, 185, 129, 0.3); }
+  100% { box-shadow: inset 0 0 0 transparent; }
+}
+
+.gameroom-flash-correct {
+  animation: gameroom-flash-green 0.6s ease;
+}
+
+@keyframes gameroom-flash-red {
+  0% { box-shadow: inset 0 0 100px rgba(255, 0, 80, 0.3); }
+  100% { box-shadow: inset 0 0 0 transparent; }
+}
+
+.gameroom-flash-wrong {
+  animation: gameroom-flash-red 0.6s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LOADING / TRANSITION
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.gameroom-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 10020;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #030308;
+}
+
+.gameroom-loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: 3px solid rgba(255,255,255,0.06);
+  border-top: 3px solid #00f2fe;
+  border-radius: 50%;
+  animation: gameroom-spin 0.8s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes gameroom-spin {
+  to { transform: rotate(360deg); }
+}
+
+.gameroom-loading-text {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+  color: #64748b;
+  letter-spacing: 0.05em;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE — Mobile adjustments
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .gameroom-picker-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    max-width: 400px;
+  }
+
+  .gameroom-lang-card {
+    padding: 20px 14px;
+  }
+
+  .gameroom-lang-icon {
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+  }
+
+  .gameroom-lang-name {
+    font-size: 1rem;
+  }
+
+  .gameroom-options-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gameroom-question-panel {
+    padding: 18px;
+    border-radius: 20px 20px 0 0;
+    margin-bottom: 0;
+    max-width: 100%;
+  }
+
+  .gameroom-question-overlay {
+    padding: 0;
+  }
+
+  .gameroom-hud-top {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+  }
+
+  .gameroom-fuel-container {
+    max-width: 200px;
+  }
+
+  .gameroom-score-value {
+    font-size: 1.2rem;
+  }
+
+  .gameroom-combo-container {
+    top: 56px;
+    right: 10px;
+  }
+
+  .gameroom-combo-value {
+    font-size: 1.8rem;
+  }
+
+  .gameroom-hud-bottom {
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+  }
+
+  .gameroom-gameover-stats {
+    gap: 10px;
+  }
+
+  .gameroom-gameover-stat {
+    padding: 14px 10px;
+  }
+
+  .gameroom-gameover-stat-value {
+    font-size: 1.3rem;
+  }
+
+  .gameroom-difficulty-badge {
+    font-size: 0.6rem;
+    padding: 4px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gameroom-picker {
+    padding: 20px 10px 80px 10px;
+  }
+
+  .gameroom-picker-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 0 4px 60px 4px;
+  }
+
+  .gameroom-lang-card {
+    padding: 18px 10px;
+  }
+
+  .gameroom-question-code {
+    font-size: 0.72rem;
+    padding: 10px 14px;
+  }
+
+  .gameroom-option-btn {
+    padding: 10px 12px;
+    font-size: 0.75rem;
+  }
+
+  .gameroom-gameover-actions {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .gameroom-btn-retry,
+  .gameroom-btn-home {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@keyframes gameroom-pop-in {
+  0% { transform: translate(-50%, 20px) scale(0.95); opacity: 0; }
+  100% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+}

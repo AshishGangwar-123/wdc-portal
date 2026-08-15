@@ -235,7 +235,24 @@ def process_agent_query(user_name: str, query: str):
         return {"response_text": text, "action_type": "text_response", "payload": stats}
 
     # =====================================================================
-    # 6. DOMAINS & TECH STACK INTENT
+    # 6. GAME ARENA / CODE STUDIO INTENT
+    # =====================================================================
+    game_keywords = [
+      "game", "gameroom", "game room", "arena", "studio", "code city", "langchain game", "sql game", "html game", "css game", "quiz", "practice", "level",
+      "गेम", "गेमरूम", "गेम रूम", "कोड स्टूडियो", "अरीना", "लेवल", "प्रैक्टिस", "सवाल"
+    ]
+    if any(kw in q for kw in game_keywords):
+        if lang == "hi_devanagari":
+            text = f"नमस्ते {user_name}! WDC Interactive Gamified Game Room 8 मुख्य ट्रैक्स में कुल 900+ गेमिंग मिशन प्रदान करता है:\n1. 🦜 LangChain AI: Live Python IDE & 12-Lesson Syllabus (120 Missions)\n2. 🗄️ CyberSQL: 10 Levels x 10 Missions (100 Drag-to-Connect SQL Challenges)\n3. 🎨 HTML5 & CSS3: Visual Holo-Lab Live Canvas (50 Design Missions)\n4. 🐍 Python, JS, C++, C, Java: 3D Procedural Code City Drive Games (650+ Questions)\n\nअपनी कोडिंग स्किल्स प्रैक्टिस करने के लिए टॉप नेवबार से 🎮 Game Room ओपन करें!"
+        elif lang == "en":
+            text = f"Hello {user_name}! WDC Interactive Gamified Game Room features 8 technical tracks with over 900+ hands-on mission challenges:\n1. 🦜 LangChain AI: Live Python IDE & 12-Lesson Syllabus (120 Missions)\n2. 🗄️ CyberSQL: 10 Levels x 10 Missions (100 Drag-to-Connect SQL Challenges)\n3. 🎨 HTML5 & CSS3: Visual Holo-Lab Live Canvas (50 Design Missions)\n4. 🐍 Python, JS, C++, C, Java: 3D Procedural Code City Drive Games (650+ Questions)\n\nOpen 🎮 Game Room from the top navigation bar to start playing!"
+        else:
+            text = f"Ji {user_name}! WDC Interactive Gamified Game Room 8 major tracks me total 900+ hands-on mission challenges offer karta hai:\n1. 🦜 LangChain AI: Live Python IDE & 12-Lesson Syllabus (120 Missions)\n2. 🗄️ CyberSQL: 10 Levels x 10 Missions (100 Drag-to-Connect SQL Challenges)\n3. 🎨 HTML5 & CSS3: Visual Holo-Lab Live Canvas (50 Design Missions)\n4. 🐍 Python, JS, C++, C, Java: 3D Procedural Code City Drive Games (650+ Questions)\n\nApni coding skills practice karne ke liye top navbar se 🎮 Game Room open karein!"
+
+        return {"response_text": text, "action_type": "text_response", "payload": stats}
+
+    # =====================================================================
+    # 7. DOMAINS & TECH STACK INTENT
     # =====================================================================
     domain_keywords = ["domain", "domains", "tech", "stack", "technology", "topic", "डोमेन", "तकनीक", "विषय", "क्या सिखाते"]
     if any(kw in q for kw in domain_keywords):

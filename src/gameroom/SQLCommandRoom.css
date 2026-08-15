@@ -1,0 +1,483 @@
+/* ==========================================================================
+   CyberSQL Drag-to-Connect Sequence Matrix — CSS v3
+   ========================================================================== */
+
+.sql-room-container {
+  position: fixed;
+  inset: 0;
+  z-index: 10005;
+  background: radial-gradient(circle at 50% 30%, #17120a 0%, #060503 100%);
+  display: flex;
+  flex-direction: column;
+  color: #f1f5f9;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  user-select: none !important;
+  overflow: hidden;
+}
+
+/* ── Top Header ── */
+.sql-header {
+  height: 64px;
+  background: rgba(20, 15, 8, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245, 158, 11, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.sql-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sql-logo-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.3) 0%, rgba(56, 189, 248, 0.3) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+}
+
+.sql-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #f59e0b 0%, #38bdf8 50%, #10b981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+.sql-subtitle {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-family: 'Fira Code', monospace;
+}
+
+.sql-header-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sql-btn-back {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 8px 16px;
+  color: #94a3b8;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sql-btn-back:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #f8fafc;
+}
+
+.sql-btn-run {
+  background: linear-gradient(135deg, #f59e0b 0%, #10b981 100%);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 22px;
+  color: #060503;
+  font-weight: 900;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.sql-btn-run:hover:not(:disabled) {
+  transform: scale(1.04);
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.8);
+}
+
+.sql-btn-run:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Workspace ── */
+.sql-workspace {
+  flex: 1;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Left Sidebar (Level Selector & Problem Statement) ── */
+.sql-sidebar {
+  width: 320px;
+  background: rgba(15, 11, 6, 0.94);
+  border-right: 1px solid rgba(245, 158, 11, 0.2);
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 16px;
+  z-index: 10;
+  overflow-y: auto;
+}
+
+.sql-section-title {
+  font-size: 0.72rem;
+  font-family: 'Fira Code', monospace;
+  color: #f59e0b;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.sql-level-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sql-level-pill {
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.sql-level-pill.active {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: #f59e0b;
+  color: #f59e0b;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+}
+
+.sql-level-pill.completed {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: #10b981;
+  color: #10b981;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
+}
+
+.sql-problem-card {
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  color: #cbd5e1;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+/* ── Main Pipeline & Table Area ── */
+.sql-center-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
+  overflow-y: auto;
+}
+
+/* Sequenced Pipeline Dropzone */
+.sql-pipeline-container {
+  background: rgba(10, 7, 4, 0.94);
+  border: 2px dashed rgba(245, 158, 11, 0.35);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.sql-pipeline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8rem;
+  color: #f59e0b;
+  font-weight: 700;
+}
+
+.sql-pipeline-slots {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  min-height: 54px;
+}
+
+.sql-slot-box {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid #f59e0b;
+  color: #f59e0b;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.88rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sql-slot-box:hover {
+  transform: translateY(-2px);
+  background: rgba(245, 158, 11, 0.25);
+}
+
+.sql-connector-arrow {
+  color: #38bdf8;
+  font-weight: 900;
+  font-size: 1.1rem;
+}
+
+.sql-empty-slot {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  color: #64748b;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8rem;
+}
+
+/* Widget Pool Chips */
+.sql-widgets-pool {
+  background: rgba(18, 14, 8, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sql-widgets-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.sql-widget-chip {
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sql-widget-chip:hover:not(.used) {
+  background: #38bdf8;
+  color: #060503;
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+}
+
+.sql-widget-chip.used {
+  opacity: 0.3;
+  cursor: not-allowed;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Database Table Grid Card */
+.sql-table-card {
+  background: rgba(18, 14, 8, 0.92);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+.sql-table-header {
+  padding: 12px 18px;
+  background: rgba(245, 158, 11, 0.12);
+  border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sql-table-name {
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: #f59e0b;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sql-grid {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.sql-grid th {
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.4);
+  color: #38bdf8;
+  font-family: 'Fira Code', monospace;
+  font-weight: 700;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sql-grid td {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: #cbd5e1;
+  font-family: 'Fira Code', monospace;
+}
+
+.sql-grid tr.matched {
+  background: rgba(16, 185, 129, 0.2) !important;
+  color: #10b981 !important;
+  font-weight: 700;
+  animation: matchedRowPulse 1.5s infinite alternate;
+}
+
+.sql-grid tr.unmatched {
+  opacity: 0.35;
+}
+
+@keyframes matchedRowPulse {
+  0% { background: rgba(16, 185, 129, 0.2); }
+  100% { background: rgba(16, 185, 129, 0.4); }
+}
+
+.sql-pk-badge {
+  background: rgba(245, 158, 11, 0.2);
+  border: 1px solid #f59e0b;
+  color: #f59e0b;
+  font-size: 0.65rem;
+  padding: 1px 5px;
+  border-radius: 4px;
+  margin-left: 6px;
+}
+
+/* Console Logs Window */
+.sql-query-editor {
+  height: 140px;
+  background: rgba(5, 4, 2, 0.96);
+  border-top: 1px solid rgba(245, 158, 11, 0.25);
+  display: flex;
+  flex-direction: column;
+  padding: 12px 20px;
+  font-family: 'Fira Code', monospace;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.6);
+  z-index: 20;
+}
+
+.sql-logs-container {
+  height: 100%;
+  overflow-y: auto;
+  font-size: 0.78rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sql-log-line {
+  color: #94a3b8;
+}
+
+.sql-log-success {
+  color: #10b981;
+  font-weight: 700;
+}
+
+/* Victory Modal */
+.sql-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10020;
+  background: rgba(5, 4, 2, 0.85);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sql-modal-card {
+  width: 480px;
+  background: rgba(18, 14, 8, 0.96);
+  border: 2px solid #10b981;
+  border-radius: 20px;
+  padding: 32px;
+  text-align: center;
+  box-shadow: 0 0 50px rgba(16, 185, 129, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ── Mobile & Tablet Responsiveness ── */
+@media (max-width: 768px) {
+  .sql-header {
+    height: auto;
+    padding: 10px 14px;
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+  .sql-title-group {
+    justify-content: center;
+  }
+  .sql-title {
+    font-size: 1rem;
+  }
+  .sql-header-controls {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .sql-workspace {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .sql-sidebar {
+    width: 100%;
+    max-height: 200px;
+    border-right: none;
+    border-bottom: 1px solid rgba(245, 158, 11, 0.25);
+  }
+  .sql-center-area {
+    padding: 12px;
+  }
+  .sql-query-editor {
+    height: 100px;
+  }
+  .sql-modal-card {
+    width: 90%;
+    padding: 20px;
+  }
+}

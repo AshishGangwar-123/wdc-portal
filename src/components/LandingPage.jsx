@@ -16,6 +16,14 @@ const LinkedInIcon = ({ size = 14, color = 'currentColor' }) => (
     <circle cx="4" cy="4" r="2"></circle>
   </svg>
 );
+
+const InstagramIcon = ({ size = 14, color = 'currentColor' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+  </svg>
+);
 import FloatingCodeElements from './FloatingCodeElements';
 import AIConciergeWidget from './AIConciergeWidget';
 import AuraFloatingAvatar from './AuraFloatingAvatar';
@@ -51,7 +59,7 @@ const TECH_STACK = [
   'Next.js','OpenAI API','GSAP','Tailwind CSS','Firebase','AWS',
 ];
 
-export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
+export default function LandingPage({ isSiteLoaded, onLaunchAI, onOpenGameRoom }) {
   const heroTitleRef    = useRef(null);
   const heroBadgeRef    = useRef(null);
   const heroRightRef    = useRef(null);
@@ -382,6 +390,143 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
           </div>
         </div>
       </div>
+
+      {/* ================================================================
+          FEATURED GAMIFIED CODE STUDIO WIDGET
+          ================================================================ */}
+      <section
+        id="code-arena-showcase"
+        style={{
+          maxWidth: '1050px', margin: '48px auto 0', padding: '0 20px', position: 'relative', zIndex: 2
+        }}
+      >
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(12, 14, 38, 0.95) 0%, rgba(20, 4, 25, 0.95) 100%)',
+          borderRadius: '24px',
+          border: '1px solid rgba(0, 242, 254, 0.25)',
+          padding: '30px 24px',
+          boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 242, 254, 0.12)',
+          position: 'relative',
+          overflow: 'hidden',
+        }}>
+          {/* Background Ambient Glow */}
+          <div style={{
+            position: 'absolute', top: '-50%', right: '-20%', width: '400px', height: '400px',
+            background: 'radial-gradient(circle, rgba(121, 40, 202, 0.2) 0%, transparent 70%)',
+            pointerEvents: 'none', filter: 'blur(50px)'
+          }} />
+
+          {/* Section Header */}
+          <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: '8px',
+              padding: '5px 16px', borderRadius: '99px',
+              background: 'rgba(0, 242, 254, 0.1)', border: '1px solid rgba(0, 242, 254, 0.3)',
+              color: '#00f2fe', fontFamily: 'Fira Code', fontSize: '0.78rem', fontWeight: 700,
+              marginBottom: '12px'
+            }}>
+              🎮 GAMIFIED GAME ROOM
+            </div>
+            <h2 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.4rem)', fontWeight: 900, margin: 0, letterSpacing: '-0.02em' }}>
+              Master Programming Through <span className="text-gradient-animated">Interactive Cyber-Games</span>
+            </h2>
+            <p style={{ color: '#94a3b8', fontSize: '0.92rem', maxWidth: '620px', margin: '10px auto 0 auto', lineHeight: 1.5 }}>
+              Experience 900+ hands-on mission challenges across 8 technical tracks — featuring real-time IDE script canvas, drag-to-connect SQL pipelines, and 3D Code City drives!
+            </p>
+          </div>
+
+          {/* 8 Distinct Separate Feature Cards Grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '14px', marginBottom: '28px' }}>
+            {/* 1. LangChain AI */}
+            <div style={{ padding: '14px 16px', borderRadius: '14px', background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(0, 166, 126, 0.3)' }}>
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="LangChain AI" style={{ width: 32, height: 32, marginBottom: 6 }} />
+              <h3 style={{ fontSize: '0.92rem', fontWeight: 800, color: '#00a67e', margin: '0 0 4px 0' }}>LangChain AI Studio</h3>
+              <p style={{ fontSize: '0.76rem', color: '#94a3b8', margin: 0, lineHeight: 1.4 }}>
+                12 Lessons & 120 Missions with <code>init_chat_model()</code> & live <code>app.py</code> IDE canvas.
+              </p>
+            </div>
+
+            {/* 2. CyberSQL */}
+            <div style={{ padding: '14px 16px', borderRadius: '14px', background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(245, 158, 11, 0.3)' }}>
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="CyberSQL" style={{ width: 32, height: 32, marginBottom: 6 }} />
+              <h3 style={{ fontSize: '0.92rem', fontWeight: 800, color: '#f59e0b', margin: '0 0 4px 0' }}>CyberSQL 100 Matrix</h3>
+              <p style={{ fontSize: '0.76rem', color: '#94a3b8', margin: 0, lineHeight: 1.4 }}>
+                100 SQL Challenges (10 Levels x 10 Missions) with scrambled drag-to-connect query widgets.
+              </p>
+            </div>
+
+            {/* 3. HTML & CSS */}
+            <div style={{ padding: '14px 16px', borderRadius: '14px', background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 0, 122, 0.3)' }}>
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML CSS" style={{ width: 32, height: 32, marginBottom: 6 }} />
+              <h3 style={{ fontSize: '0.92rem', fontWeight: 800, color: '#ff007a', margin: '0 0 4px 0' }}>HTML & CSS Holo-Lab</h3>
+              <p style={{ fontSize: '0.76rem', color: '#94a3b8', margin: 0, lineHeight: 1.4 }}>
+                50 Visual Design Missions with real-time granular CSS rule parsing & live hologram preview.
+              </p>
+            </div>
+
+            {/* 4. Python 3 */}
+            <div style={{ padding: '14px 16px', borderRadius: '14px', background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(55, 118, 171, 0.3)' }}>
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python 3" style={{ width: 32, height: 32, marginBottom: 6 }} />
+              <h3 style={{ fontSize: '0.92rem', fontWeight: 800, color: '#3776ab', margin: '0 0 4px 0' }}>Python 3 Drive</h3>
+              <p style={{ fontSize: '0.76rem', color: '#94a3b8', margin: 0, lineHeight: 1.4 }}>
+                3D Code City Explorer with 100+ procedural Python logic & data structure questions.
+              </p>
+            </div>
+
+            {/* 5. JavaScript */}
+            <div style={{ padding: '14px 16px', borderRadius: '14px', background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(247, 223, 30, 0.3)' }}>
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" style={{ width: 32, height: 32, marginBottom: 6 }} />
+              <h3 style={{ fontSize: '0.92rem', fontWeight: 800, color: '#f7df1e', margin: '0 0 4px 0' }}>JavaScript Studio</h3>
+              <p style={{ fontSize: '0.76rem', color: '#94a3b8', margin: 0, lineHeight: 1.4 }}>
+                3D Code City Explorer with 100+ procedural JS async, DOM & array manipulation questions.
+              </p>
+            </div>
+
+            {/* 6. C++ */}
+            <div style={{ padding: '14px 16px', borderRadius: '14px', background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(0, 89, 156, 0.3)' }}>
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++" style={{ width: 32, height: 32, marginBottom: 6 }} />
+              <h3 style={{ fontSize: '0.92rem', fontWeight: 800, color: '#38bdf8', margin: '0 0 4px 0' }}>C++ Programming</h3>
+              <p style={{ fontSize: '0.76rem', color: '#94a3b8', margin: 0, lineHeight: 1.4 }}>
+                3D Code City Explorer with 100+ procedural C++ OOP, DSA & pointer questions.
+              </p>
+            </div>
+
+            {/* 7. C Language */}
+            <div style={{ padding: '14px 16px', borderRadius: '14px', background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(92, 107, 192, 0.3)' }}>
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C Language" style={{ width: 32, height: 32, marginBottom: 6 }} />
+              <h3 style={{ fontSize: '0.92rem', fontWeight: 800, color: '#818cf8', margin: '0 0 4px 0' }}>C Core Engine</h3>
+              <p style={{ fontSize: '0.76rem', color: '#94a3b8', margin: 0, lineHeight: 1.4 }}>
+                3D Code City Explorer with 100+ procedural C memory, pointers & struct questions.
+              </p>
+            </div>
+
+            {/* 8. Java */}
+            <div style={{ padding: '14px 16px', borderRadius: '14px', background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(237, 139, 0, 0.3)' }}>
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" style={{ width: 32, height: 32, marginBottom: 6 }} />
+              <h3 style={{ fontSize: '0.92rem', fontWeight: 800, color: '#f89820', margin: '0 0 4px 0' }}>Java Enterprise</h3>
+              <p style={{ fontSize: '0.76rem', color: '#94a3b8', margin: 0, lineHeight: 1.4 }}>
+                3D Code City Explorer with 100+ procedural Java OOP, streams & class questions.
+              </p>
+            </div>
+          </div>
+
+          {/* Launch CTA */}
+          <div style={{ textAlign: 'center' }}>
+            <button
+              onClick={onOpenGameRoom}
+              className="cta-primary-btn"
+              style={{
+                padding: '12px 30px', borderRadius: '12px', fontSize: '0.92rem', fontWeight: 900,
+                background: 'linear-gradient(135deg, #00f2fe 0%, #7928ca 50%, #ff007a 100%)',
+                color: '#f8fafc', border: 'none', cursor: 'pointer',
+                boxShadow: '0 0 25px rgba(0, 242, 254, 0.4)'
+              }}
+            >
+              ⚡ LAUNCH INTERACTIVE GAME ROOM NOW ➔
+            </button>
+          </div>
+        </div>
+      </section>
 
       {/* ================================================================
           DOMAINS — WHAT WE DO
@@ -800,7 +945,29 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
                 <a href="mailto:wdcrecb@gmail.com" style={{ color: '#00f2fe', textDecoration: 'none' }}>wdcrecb@gmail.com</a>
               </div>
 
-              <div style={{ marginTop: '4px' }}>
+              <div style={{ marginTop: '6px', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                <a
+                  href="https://www.instagram.com/wdcrecb?igsh=N3VrdDUyNWZnZWoy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="glass-btn"
+                  style={{
+                    padding: '6px 14px',
+                    fontSize: '0.78rem',
+                    color: '#ff007a',
+                    borderColor: 'rgba(255, 0, 122, 0.4)',
+                    background: 'rgba(255, 0, 122, 0.12)',
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    boxShadow: '0 0 12px rgba(255, 0, 122, 0.2)',
+                  }}
+                >
+                  <InstagramIcon size={14} color="#ff007a" />
+                  Follow on Instagram <ExternalLink size={12} color="#ff007a" />
+                </a>
+
                 <a
                   href="https://www.linkedin.com/company/web-dev-club-recb/posts/?feedView=all"
                   target="_blank"
@@ -819,7 +986,7 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI }) {
                   }}
                 >
                   <LinkedInIcon size={14} color="#0077b5" />
-                  Connect on LinkedIn <ExternalLink size={12} color="#0077b5" />
+                  LinkedIn <ExternalLink size={12} color="#0077b5" />
                 </a>
               </div>
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import Navbar from './components/Navbar';
 import LandingPage from './components/LandingPage';
 import CustomCursor from './components/CustomCursor';
@@ -8,12 +8,15 @@ import AdminAuthModal from './components/AdminAuthModal';
 import Loader from './components/Loader';
 import UserDashboard from './components/UserDashboard';
 
+import GameRoom from './gameroom/GameRoom';
+
 export default function App() {
   const [view, setView] = useState(() => {
     return window.location.hash === '#wdcadmin' ? 'admin' : 'landing';
   });
   const [isSiteLoaded, setIsSiteLoaded] = useState(false);
   const [showDashboardModal, setShowDashboardModal] = useState(false);
+  const [showGameRoom, setShowGameRoom] = useState(false);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(() => {
     try {
       const token = sessionStorage.getItem('wdc_admin_auth_token');
@@ -92,6 +95,7 @@ export default function App() {
         currentView={view}
         onGoLanding={() => switchView('landing')}
         onOpenDashboard={() => setShowDashboardModal(true)}
+        onOpenGameRoom={() => setShowGameRoom(true)}
         currentUser={currentUser}
       />
 
@@ -100,6 +104,7 @@ export default function App() {
         <LandingPage
           isSiteLoaded={isSiteLoaded}
           onLaunchAI={handleLaunchAI}
+          onOpenGameRoom={() => setShowGameRoom(true)}
         />
       )}
 
@@ -123,6 +128,11 @@ export default function App() {
           onLoginSuccess={handleLoginSuccess}
           onLogout={handleLogout}
         />
+      )}
+
+      {/* 4. CODEFUEL GAME ROOM */}
+      {showGameRoom && (
+        <GameRoom onClose={() => setShowGameRoom(false)} />
       )}
     </div>
   );

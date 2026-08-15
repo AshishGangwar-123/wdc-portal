@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Code2, Sparkles, Menu, X } from 'lucide-react';
+import { Code2, Sparkles, Menu, X, Gamepad2 } from 'lucide-react';
 import gsap from 'gsap';
 
-export default function Navbar({ onStartAI, currentView, onGoLanding, onOpenDashboard }) {
+export default function Navbar({ onStartAI, currentView, onGoLanding, onOpenDashboard, onOpenGameRoom }) {
   const navRef  = useRef(null);
   const logoRef = useRef(null);
   const [scrolled, setScrolled] = useState(false);
@@ -41,6 +41,7 @@ export default function Navbar({ onStartAI, currentView, onGoLanding, onOpenDash
     { label: 'Home',       action: onGoLanding, href: null },
     { label: 'Domains',    action: onGoLanding, href: '#domains' },
     { label: 'Workshops',  action: onGoLanding, href: '#workshops' },
+    { label: 'Game Room',  action: onOpenGameRoom, href: null },
     { label: 'AI Concierge', action: onStartAI, href: '#ai-concierge' },
   ];
 
@@ -131,7 +132,20 @@ export default function Navbar({ onStartAI, currentView, onGoLanding, onOpenDash
           🎓 Dashboard
         </button>
 
-
+        <button
+          onClick={onOpenGameRoom}
+          className="glass-btn"
+          style={{
+            padding: '8px 16px', fontSize: '0.82rem',
+            background: 'linear-gradient(135deg, rgba(121, 40, 202, 0.25) 0%, rgba(0, 242, 254, 0.25) 100%)',
+            borderColor: 'rgba(121, 40, 202, 0.6)',
+            color: '#f8fafc',
+            fontWeight: 800,
+            boxShadow: '0 0 15px rgba(121, 40, 202, 0.3)',
+          }}
+        >
+          🎮 GAME ROOM
+        </button>
 
         <button
           onClick={onStartAI}
@@ -220,6 +234,14 @@ export default function Navbar({ onStartAI, currentView, onGoLanding, onOpenDash
               🎓 Dashboard
             </button>
           </div>
+
+          <button
+            onClick={() => { setMobileMenuOpen(false); onOpenGameRoom?.(); }}
+            className="glass-btn"
+            style={{ width: '100%', justifyContent: 'center', padding: '10px', fontSize: '0.85rem', color: '#a78bfa', borderColor: 'rgba(121, 40, 202, 0.5)', marginTop: '4px' }}
+          >
+            <Gamepad2 size={16} /> Game Room
+          </button>
 
           <button
             onClick={() => { setMobileMenuOpen(false); onStartAI(); }}
