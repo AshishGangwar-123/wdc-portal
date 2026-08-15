@@ -6,7 +6,7 @@ export default function PWAInstallPrompt() {
   const [showPrompt, setShowPrompt] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
   const [installed, setInstalled] = useState(false);
-  const [isMobileDevice, setIsMobileDevice] = useState(false);
+  const [showGuideModal, setShowGuideModal] = useState(false);
 
   useEffect(() => {
     // Exclusively allow mobile devices (screen width <= 768px OR mobile userAgent)
@@ -35,20 +35,19 @@ export default function PWAInstallPrompt() {
     const isIosDevice = /iphone|ipad|ipod/.test(userAgent);
     if (isIosDevice && !window.navigator.standalone) {
       setIsIOS(true);
-      const dismissed = sessionStorage.getItem('wdc_pwa_prompt_dismissed');
-      if (!dismissed) {
-        setTimeout(() => setShowPrompt(true), 3000);
-      }
+    }
+
+    // Always reveal prompt on mobile after 1.5 seconds unless dismissed in this session
+    const dismissed = sessionStorage.getItem('wdc_pwa_prompt_dismissed');
+    if (!dismissed) {
+      const timer = setTimeout(() => setShowPrompt(true), 1500);
+      return () => clearTimeout(timer);
     }
 
     // Listen for browser PWA install prompt (Android / Mobile Chrome)
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      const dismissed = sessionStorage.getItem('wdc_pwa_prompt_dismissed');
-      if (!dismissed) {
-        setTimeout(() => setShowPrompt(true), 2500);
-      }
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -65,14 +64,17 @@ export default function PWAInstallPrompt() {
   }, []);
 
   const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') {
-      setInstalled(true);
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setInstalled(true);
+      }
+      setDeferredPrompt(null);
+      setShowPrompt(false);
+    } else {
+      setShowGuideModal(true);
     }
-    setDeferredPrompt(null);
-    setShowPrompt(false);
   };
 
   const handleDismiss = () => {
@@ -180,6 +182,45 @@ export default function PWAInstallPrompt() {
           >
             Later
           </button>
+        </div>
+      )}
+
+      {/* Guide Modal for Manual PWA Installation */}
+      {showGuideModal && (
+        <div
+          style={{
+            position: 'fixed', inset: 0, zIndex: 10050,
+            background: 'rgba(2, 6, 23, 0.9)', backdropFilter: 'blur(12px)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px'
+          }}
+          onClick={() => setShowGuideModal(false)}
+        >
+          <div
+            style={{
+              background: '#090d24', border: '2px solid #00f2fe', borderRadius: '20px',
+              padding: '24px', maxWidth: '380px', width: '100%', textAlign: 'center',
+              boxShadow: '0 0 40px rgba(0, 242, 254, 0.3)', color: '#fff'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '10px', color: '#00f2fe' }}>
+              📲 Add WDC App to Home Screen
+            </div>
+            <div style={{ fontSize: '0.85rem', color: '#cbd5e1', lineHeight: 1.5, textAlign: 'left', marginBottom: '18px' }}>
+              <p style={{ marginBottom: '8px' }}><b>Step 1:</b> Tap browser menu button (<b>⋮ 3-Dots</b> or <b>Share</b> icon).</p>
+              <p style={{ marginBottom: '8px' }}><b>Step 2:</b> Tap <b>"Add to Home screen"</b> or <b>"Install app"</b>.</p>
+              <p><b>Step 3:</b> Open WDC RECB directly from your phone app drawer!</p>
+            </div>
+            <button
+              onClick={() => { setShowGuideModal(false); setShowPrompt(false); }}
+              style={{
+                width: '100%', padding: '12px', borderRadius: '12px', background: '#00f2fe',
+                color: '#05060f', fontWeight: 900, border: 'none', cursor: 'pointer'
+              }}
+            >
+              GOT IT! 👍
+            </button>
+          </div>
         </div>
       )}
     </div>
