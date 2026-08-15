@@ -7,6 +7,7 @@ import AdminPanel from './components/AdminPanel';
 import AdminAuthModal from './components/AdminAuthModal';
 import Loader from './components/Loader';
 import UserDashboard from './components/UserDashboard';
+import PWAInstallPrompt from './components/PWAInstallPrompt';
 
 import GameRoom from './gameroom/GameRoom';
 
@@ -134,6 +135,9 @@ export default function App() {
       {showGameRoom && (
         <GameRoom onClose={() => setShowGameRoom(false)} />
       )}
+
+      {/* 5. PWA MOBILE ONE-CLICK INSTALL PROMPT */}
+      <PWAInstallPrompt />
     </div>
   );
 }

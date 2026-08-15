@@ -1,0 +1,18 @@
+{
+  "short_name": "WDC RECB",
+  "name": "WDC RECB — Web Development Club Portal",
+  "icons": [
+    {
+      "src": "/wdc_logo.png",
+      "type": "image/png",
+      "sizes": "192x192 512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#05060f",
+  "theme_color": "#05060f",
+  "display": "standalone",
+  "orientation": "portrait",
+  "description": "Official Web Development Club Portal for Rajkiya Engineering College Banda (RECB) with Interactive Game Room, AI Concierge & Workshops."
+}
