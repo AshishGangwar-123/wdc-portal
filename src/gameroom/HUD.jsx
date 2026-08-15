@@ -38,6 +38,7 @@ export default function HUD({
 
   return (
     <div
+      className="gameroom-hud-bar"
       style={{
         position: 'fixed',
         top: 14,
@@ -53,6 +54,7 @@ export default function HUD({
     >
       {/* ── Left Side: Active Quest & Mission Banner ── */}
       <div
+        className="hud-quest-banner"
         style={{
           pointerEvents: 'auto',
           background: 'rgba(8, 10, 28, 0.92)',
@@ -127,7 +129,7 @@ export default function HUD({
       </div>
 
       {/* ── Right Side: Level, XP, Score & Controls ── */}
-      <div style={{ pointerEvents: 'auto', display: 'flex', alignItems: 'center', gap: 10 }}>
+      <div className="hud-controls-panel" style={{ pointerEvents: 'auto', display: 'flex', alignItems: 'center', gap: 10 }}>
         {/* Level & XP Gauge */}
         <div
           style={{

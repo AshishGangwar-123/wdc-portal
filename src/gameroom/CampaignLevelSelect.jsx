@@ -42,6 +42,7 @@ export default function CampaignLevelSelect({
 
   return (
     <div
+      className="campaign-select-container"
       style={{
         position: 'fixed',
         inset: 0,
@@ -57,6 +58,7 @@ export default function CampaignLevelSelect({
     >
       {/* ── Top Header Navigation ── */}
       <div
+        className="campaign-select-header"
         style={{
           width: '100%',
           maxWidth: '860px',
@@ -90,6 +92,7 @@ export default function CampaignLevelSelect({
 
         <div style={{ textAlign: 'center' }}>
           <h1
+            className="campaign-select-title"
             style={{
               fontSize: '2.2rem',
               fontWeight: 900,
@@ -134,6 +137,7 @@ export default function CampaignLevelSelect({
 
       {/* ── Level Grid Container ── */}
       <div
+        className="campaign-select-grid"
         style={{
           width: '100%',
           maxWidth: '860px',

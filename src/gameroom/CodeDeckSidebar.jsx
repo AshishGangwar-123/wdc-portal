@@ -74,7 +74,7 @@ export default function CodeDeckSidebar({
     <>
       {/* ── Proximity Signboard Popup Banner (when near a destination) ── */}
       {activeNearDest && (
-        <div style={{
+        <div className="code-deck-proximity-banner" style={{
           position: 'fixed',
           bottom: 24,
           left: '50%',
@@ -162,7 +162,7 @@ export default function CodeDeckSidebar({
       )}
 
       {/* ── Code Deck Sidebar (Assembly Panel — Mouse Draggable) ── */}
-      <div style={{
+      <div className="code-deck-sidebar-panel" style={{
         position: 'fixed',
         top: 80 + dragOffset.y,
         right: deckOpen ? 16 - dragOffset.x : -340,
@@ -218,7 +218,7 @@ export default function CodeDeckSidebar({
           }}
         >
           <div>
-            <div style={{ fontWeight: 800, fontSize: '1rem', color: '#f0f4ff', display: 'flex', alignItems: 'center', gap: 6 }}>
+            <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#f0f4ff', display: 'flex', alignItems: 'center', gap: 6 }}>
               <span style={{ color: '#00f2fe', fontSize: '0.85rem' }}>⣿</span> 📦 Code Assembly Deck
             </div>
             <div style={{ fontSize: '0.68rem', color: '#64748b', fontFamily: '"Fira Code", monospace' }}>
@@ -226,26 +226,46 @@ export default function CodeDeckSidebar({
             </div>
           </div>
 
-          {/* Test Code Button */}
-          <button
-            onClick={onTestCode}
-            disabled={assembledBlocks.length === 0}
-            style={{
-              background: assembledBlocks.length > 0 ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 'rgba(255,255,255,0.06)',
-              border: 'none',
-              borderRadius: '10px',
-              padding: '8px 14px',
-              color: assembledBlocks.length > 0 ? '#fff' : '#64748b',
-              fontWeight: 800,
-              fontSize: '0.8rem',
-              cursor: assembledBlocks.length > 0 ? 'pointer' : 'not-allowed',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 4,
-            }}
-          >
-            <span>▶</span> Test Code
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            {/* Explicit Hide / Show Toggle Button */}
+            <button
+              onClick={() => setDeckOpen(false)}
+              style={{
+                background: 'rgba(255, 255, 255, 0.08)',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                borderRadius: '8px',
+                padding: '6px 10px',
+                color: '#94a3b8',
+                fontSize: '0.72rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+              }}
+              title="Hide Code Deck"
+            >
+              👁️ Hide
+            </button>
+
+            {/* Test Code Button */}
+            <button
+              onClick={onTestCode}
+              disabled={assembledBlocks.length === 0}
+              style={{
+                background: assembledBlocks.length > 0 ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 'rgba(255,255,255,0.06)',
+                border: 'none',
+                borderRadius: '10px',
+                padding: '8px 14px',
+                color: assembledBlocks.length > 0 ? '#fff' : '#64748b',
+                fontWeight: 800,
+                fontSize: '0.8rem',
+                cursor: assembledBlocks.length > 0 ? 'pointer' : 'not-allowed',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
+              }}
+            >
+              <span>▶</span> Test Code
+            </button>
+          </div>
         </div>
 
         {/* Check Attempts & Penalty Status */}
@@ -409,6 +429,33 @@ export default function CodeDeckSidebar({
           </div>
         )}
       </div>
+
+      {/* Floating Show Code Deck Button when minimized */}
+      {!deckOpen && (
+        <button
+          onClick={() => setDeckOpen(true)}
+          style={{
+            position: 'fixed',
+            bottom: 24,
+            right: 24,
+            zIndex: 10020,
+            padding: '10px 18px',
+            borderRadius: '99px',
+            background: 'linear-gradient(135deg, #00f2fe 0%, #7928ca 100%)',
+            color: '#fff',
+            fontWeight: 800,
+            fontSize: '0.84rem',
+            border: 'none',
+            cursor: 'pointer',
+            boxShadow: '0 8px 30px rgba(0, 242, 254, 0.4)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+          }}
+        >
+          📦 Show Code Deck ({assembledBlocks.length}) 👁️
+        </button>
+      )}
     </>
   );
 }
