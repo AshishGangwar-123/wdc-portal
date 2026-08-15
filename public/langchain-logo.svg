@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <rect width="128" height="128" rx="28" fill="#041813"/>
+  <rect x="2" y="2" width="124" height="124" rx="26" fill="none" stroke="#00a67e" stroke-width="2" stroke-opacity="0.4"/>
+  <circle cx="64" cy="64" r="50" fill="url(#lcGrad)" opacity="0.2"/>
+  <defs>
+    <linearGradient id="lcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00a67e"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="birdGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#00a67e"/>
+    </linearGradient>
+  </defs>
+  <!-- Parrot Body -->
+  <path d="M46 32 C46 20, 64 16, 76 24 C86 30, 90 42, 90 54 C90 68, 80 78, 68 84 L68 104 C68 108, 62 108, 62 104 L62 84 C48 80, 46 66, 46 54 Z" fill="url(#birdGrad)"/>
+  <!-- Beak -->
+  <path d="M76 24 C88 26, 98 34, 100 46 C94 44, 86 44, 80 48 Z" fill="#ff9f1c"/>
+  <!-- Eye -->
+  <circle cx="66" cy="36" r="4.5" fill="#ffffff"/>
+  <circle cx="67" cy="36" r="2.2" fill="#041813"/>
+  <!-- Chest Wing Highlight -->
+  <path d="M52 54 C58 48, 72 48, 78 56 C74 68, 60 70, 52 54 Z" fill="#38bdf8" opacity="0.9"/>
+  <!-- Chain Link Icons -->
+  <rect x="30" y="74" width="32" height="18" rx="9" fill="none" stroke="#38bdf8" stroke-width="5" transform="rotate(-35 46 83)"/>
+  <rect x="50" y="74" width="32" height="18" rx="9" fill="none" stroke="#10b981" stroke-width="5" transform="rotate(-35 66 83)"/>
+</svg>

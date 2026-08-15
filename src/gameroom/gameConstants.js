@@ -277,7 +277,7 @@ export const SOUND = {
 export const LANGUAGE_THEMES = {
   langchain: {
     name: 'LangChain AI', icon: '🦜',
-    iconUrl: 'https://api.iconify.design/logos:langchain-icon.svg',
+    iconUrl: '/langchain-logo.svg',
     primary: '#00A67E', secondary: '#38BDF8',
     accent: '#818CF8',
     glowColor: 'rgba(0, 166, 126, 0.5)',
