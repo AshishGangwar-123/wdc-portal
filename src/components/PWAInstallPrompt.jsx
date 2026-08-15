@@ -6,8 +6,24 @@ export default function PWAInstallPrompt() {
   const [showPrompt, setShowPrompt] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
   const [installed, setInstalled] = useState(false);
+  const [isMobileDevice, setIsMobileDevice] = useState(false);
 
   useEffect(() => {
+    // Exclusively allow mobile devices (screen width <= 768px OR mobile userAgent)
+    const checkMobile = () => {
+      const userAgent = window.navigator.userAgent.toLowerCase();
+      const isMobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(userAgent);
+      const isSmallScreen = window.innerWidth <= 768;
+      return isMobileUA || isSmallScreen;
+    };
+
+    if (!checkMobile()) {
+      setIsMobileDevice(false);
+      return; // Completely hide for desktop/laptop users!
+    }
+
+    setIsMobileDevice(true);
+
     // Check if running as installed standalone PWA
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
       setInstalled(true);
@@ -25,7 +41,7 @@ export default function PWAInstallPrompt() {
       }
     }
 
-    // Listen for browser PWA install prompt (Android / Chrome / Edge)
+    // Listen for browser PWA install prompt (Android / Mobile Chrome)
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
@@ -64,7 +80,7 @@ export default function PWAInstallPrompt() {
     sessionStorage.setItem('wdc_pwa_prompt_dismissed', 'true');
   };
 
-  if (installed || !showPrompt) return null;
+  if (!isMobileDevice || installed || !showPrompt) return null;
 
   return (
     <div
