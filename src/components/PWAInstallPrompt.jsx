@@ -7,6 +7,7 @@ export default function PWAInstallPrompt() {
   const [isIOS, setIsIOS] = useState(false);
   const [installed, setInstalled] = useState(false);
   const [showGuideModal, setShowGuideModal] = useState(false);
+  const [isMobileDevice, setIsMobileDevice] = useState(false);
 
   useEffect(() => {
     // Exclusively allow mobile devices (screen width <= 768px OR mobile userAgent)

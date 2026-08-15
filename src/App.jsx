@@ -15,7 +15,7 @@ export default function App() {
   const [view, setView] = useState(() => {
     return window.location.hash === '#wdcadmin' ? 'admin' : 'landing';
   });
-  const [isSiteLoaded, setIsSiteLoaded] = useState(false);
+  const [isSiteLoaded, setIsSiteLoaded] = useState(true);
   const [showDashboardModal, setShowDashboardModal] = useState(false);
   const [showGameRoom, setShowGameRoom] = useState(false);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(() => {
