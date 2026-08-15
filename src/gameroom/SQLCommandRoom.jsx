@@ -940,12 +940,8 @@ export default function SQLCommandRoom({ onBack }) {
       {/* ── Top Header ── */}
       <div className="sql-header">
         <div className="sql-title-group">
-          <div className="sql-logo-badge">🗄️⚡</div>
-          <div>
-            <h1 className="sql-title">CYBERSQL 100-QUESTION MASTER MATRIX</h1>
-            <div className="sql-subtitle">
-              Level {level?.id || 1} of 10: {level?.title || ''} — Mission {currentMissionIdx + 1} / 10
-            </div>
+          <div className="sql-subtitle" style={{ fontSize: '0.85rem', color: '#f59e0b', fontWeight: 800 }}>
+            Level {level?.id || 1} of 10: {level?.title || ''} — Mission {currentMissionIdx + 1} / 10
           </div>
         </div>
 

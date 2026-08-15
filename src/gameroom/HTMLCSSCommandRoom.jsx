@@ -789,12 +789,8 @@ export default function HTMLCSSCommandRoom({ onBack }) {
       {/* ── Top Header ── */}
       <div className="htmlcss-header">
         <div className="htmlcss-title-group">
-          <div className="htmlcss-logo-badge">🎨⚡</div>
-          <div>
-            <h1 className="htmlcss-title">HTML5 & CSS3 VISUAL HOLO-LAB</h1>
-            <div className="htmlcss-subtitle">
-              Level {level?.id || 1} of 10: {level?.title || ''} — Mission {currentMissionIdx + 1} / 5
-            </div>
+          <div className="htmlcss-subtitle" style={{ fontSize: '0.85rem', color: '#ff007a', fontWeight: 800 }}>
+            Level {level?.id || 1} of 10: {level?.title || ''} — Mission {currentMissionIdx + 1} / 5
           </div>
         </div>
 

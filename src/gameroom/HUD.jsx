@@ -69,7 +69,6 @@ export default function HUD({
       >
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '0.72rem', color: accentColor, fontFamily: '"Fira Code", monospace', fontWeight: 800 }}>
-            <span>{levelTheme?.icon || '📌'}</span>
             <span>LEVEL {level} · MISSION {missionNumber}/20</span>
           </div>
 

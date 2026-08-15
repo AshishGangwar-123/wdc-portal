@@ -2204,12 +2204,8 @@ export default function LangChainCommandRoom({ onBack }) {
       {/* ── Top Header ── */}
       <div className="langchain-header">
         <div className="langchain-title-group">
-          <div className="langchain-logo-badge">🦜🔗</div>
-          <div>
-            <h1 className="langchain-title">LANGCHAIN & LANGGRAPH IDE STUDIO</h1>
-            <div className="langchain-subtitle">
-              Lesson {level?.id || 1} of 12: {level?.title || ''} — Mission {currentMissionIdx + 1} / 10
-            </div>
+          <div className="langchain-subtitle" style={{ fontSize: '0.85rem', color: '#00a67e', fontWeight: 800 }}>
+            Lesson {level?.id || 1} of 12: {level?.title || ''} — Mission {currentMissionIdx + 1} / 10
           </div>
         </div>
 
