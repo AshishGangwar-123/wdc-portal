@@ -65,14 +65,20 @@ export default function PWAInstallPrompt() {
   }, []);
 
   const handleInstallClick = async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') {
-        setInstalled(true);
+    const promptEvent = deferredPrompt || window.deferredPWAEvent;
+    if (promptEvent) {
+      try {
+        promptEvent.prompt();
+        const choice = await promptEvent.userChoice;
+        if (choice && choice.outcome === 'accepted') {
+          setInstalled(true);
+          setShowPrompt(false);
+        }
+        setDeferredPrompt(null);
+        window.deferredPWAEvent = null;
+      } catch (err) {
+        setShowGuideModal(true);
       }
-      setDeferredPrompt(null);
-      setShowPrompt(false);
     } else {
       setShowGuideModal(true);
     }

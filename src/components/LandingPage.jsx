@@ -4,7 +4,7 @@ import {
   CheckCircle2, Terminal, Cpu, Layers, GitBranch,
   Users, Trophy, BookOpen, Rocket, Monitor, Database,
   ChevronRight, Star, Globe, Shield, Play, ExternalLink,
-  BarChart2, Wifi, Lock, Heart, UserPlus, Mail
+  BarChart2, Wifi, Lock, Heart, UserPlus, Mail, Gamepad2
 } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -425,7 +425,7 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI, onOpenGameRoom }
               color: '#00f2fe', fontFamily: 'Fira Code', fontSize: '0.78rem', fontWeight: 700,
               marginBottom: '12px'
             }}>
-              🎮 GAMIFIED GAME ROOM
+              <Gamepad2 size={16} color="#00f2fe" /> GAMIFIED GAME ROOM
             </div>
             <h2 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.4rem)', fontWeight: 900, margin: 0, letterSpacing: '-0.02em' }}>
               Master Programming Through <span className="text-gradient-animated">Interactive Cyber-Games</span>

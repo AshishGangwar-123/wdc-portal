@@ -1,18 +1,39 @@
 {
+  "id": "/",
   "short_name": "WDC RECB",
   "name": "WDC RECB — Web Development Club Portal",
+  "description": "Official Web Development Club Portal for Rajkiya Engineering College Banda (RECB) with Interactive Game Room, AI Concierge & Workshops.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#05060f",
+  "theme_color": "#05060f",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/wdc_logo.png",
       "type": "image/png",
-      "sizes": "192x192 512x512",
-      "purpose": "any maskable"
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "/wdc_logo.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "/wdc_logo.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/wdc_logo.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
     }
-  ],
-  "start_url": "/",
-  "background_color": "#05060f",
-  "theme_color": "#05060f",
-  "display": "standalone",
-  "orientation": "portrait",
-  "description": "Official Web Development Club Portal for Rajkiya Engineering College Banda (RECB) with Interactive Game Room, AI Concierge & Workshops."
+  ]
 }

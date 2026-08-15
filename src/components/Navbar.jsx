@@ -41,7 +41,6 @@ export default function Navbar({ onStartAI, currentView, onGoLanding, onOpenDash
     { label: 'Home',       action: onGoLanding, href: null },
     { label: 'Domains',    action: onGoLanding, href: '#domains' },
     { label: 'Workshops',  action: onGoLanding, href: '#workshops' },
-    { label: 'Game Room',  action: onOpenGameRoom, href: null },
     { label: 'AI Concierge', action: onStartAI, href: '#ai-concierge' },
   ];
 
@@ -142,9 +141,12 @@ export default function Navbar({ onStartAI, currentView, onGoLanding, onOpenDash
             color: '#f8fafc',
             fontWeight: 800,
             boxShadow: '0 0 15px rgba(121, 40, 202, 0.3)',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
           }}
         >
-          🎮 GAME ROOM
+          <Gamepad2 size={16} style={{ color: '#00f2fe' }} /> GAME ROOM
         </button>
 
         <button

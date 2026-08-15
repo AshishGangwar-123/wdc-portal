@@ -5,6 +5,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { Sparkles, Gamepad2 } from 'lucide-react';
 import { LANGUAGE_THEMES } from './gameConstants';
 import soundManager from './soundManager';
 
@@ -101,7 +102,7 @@ export default function LanguagePicker({ onSelect }) {
         }}>
           Language
         </span>
-        <span style={{ marginLeft: '8px' }}>⚡</span>
+        <Sparkles size={24} color="#00f2fe" style={{ display: 'inline', marginLeft: '8px' }} />
       </h1>
 
       <p ref={subtitleRef} className="gameroom-picker-subtitle">
