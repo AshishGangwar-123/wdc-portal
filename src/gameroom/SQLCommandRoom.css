@@ -445,39 +445,64 @@
 @media (max-width: 768px) {
   .sql-header {
     height: auto;
-    padding: 10px 14px;
+    padding: 8px 12px;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
     align-items: stretch;
   }
   .sql-title-group {
     justify-content: center;
   }
   .sql-title {
-    font-size: 1rem;
+    font-size: 0.92rem;
+    text-align: center;
   }
   .sql-header-controls {
     justify-content: center;
     flex-wrap: wrap;
+    gap: 6px;
+  }
+  .sql-header-controls button {
+    padding: 6px 10px !important;
+    font-size: 0.75rem !important;
   }
   .sql-workspace {
     flex-direction: column;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .sql-sidebar {
     width: 100%;
-    max-height: 200px;
+    max-height: 70px;
     border-right: none;
     border-bottom: 1px solid rgba(245, 158, 11, 0.25);
+    padding: 6px 10px;
+    overflow-y: hidden;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .sql-level-pills {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .sql-level-pill {
+    flex-shrink: 0;
+    padding: 4px 10px;
+    font-size: 0.72rem;
   }
   .sql-center-area {
-    padding: 12px;
+    padding: 8px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .sql-query-editor {
-    height: 100px;
+    height: 90px;
   }
   .sql-modal-card {
-    width: 90%;
-    padding: 20px;
+    width: 92%;
+    padding: 18px;
   }
 }

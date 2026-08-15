@@ -372,43 +372,85 @@
   gap: 16px;
 }
 
+.langchain-ide-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
 /* ── Mobile & Tablet Responsiveness ── */
 @media (max-width: 768px) {
   .langchain-header {
     height: auto;
-    padding: 10px 14px;
+    padding: 8px 12px;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
     align-items: stretch;
   }
   .langchain-title-group {
     justify-content: center;
   }
   .langchain-title {
-    font-size: 1rem;
+    font-size: 0.92rem;
+    text-align: center;
   }
   .langchain-header-controls {
     justify-content: center;
     flex-wrap: wrap;
+    gap: 6px;
+  }
+  .langchain-header-controls button {
+    padding: 6px 12px !important;
+    font-size: 0.75rem !important;
   }
   .langchain-workspace {
     flex-direction: column;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .langchain-sidebar {
     width: 100%;
-    max-height: 200px;
+    max-height: 70px;
     border-right: none;
     border-bottom: 1px solid rgba(0, 166, 126, 0.3);
+    padding: 6px 10px;
+    overflow-y: hidden;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .langchain-level-pills {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 2px;
+  }
+  .langchain-level-pill {
+    flex-shrink: 0;
+    padding: 4px 10px;
+    font-size: 0.72rem;
   }
   .langchain-center-area {
-    padding: 12px;
+    padding: 8px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .langchain-ide-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    height: auto;
+  }
+  .langchain-step-card {
+    min-height: 220px;
   }
   .langchain-terminal {
-    height: 100px;
+    height: 90px;
   }
   .langchain-modal-card {
-    width: 90%;
-    padding: 20px;
+    width: 92%;
+    padding: 18px;
   }
 }

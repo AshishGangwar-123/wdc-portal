@@ -383,41 +383,67 @@
 @media (max-width: 768px) {
   .htmlcss-header {
     height: auto;
-    padding: 10px 14px;
+    padding: 8px 12px;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
   }
   .htmlcss-title-group {
     justify-content: center;
   }
   .htmlcss-title {
-    font-size: 1rem;
+    font-size: 0.92rem;
+    text-align: center;
   }
   .htmlcss-header-controls {
     justify-content: center;
     flex-wrap: wrap;
+    gap: 6px;
+  }
+  .htmlcss-header-controls button {
+    padding: 6px 10px !important;
+    font-size: 0.75rem !important;
   }
   .htmlcss-workspace {
     flex-direction: column;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .htmlcss-sidebar {
     width: 100%;
-    max-height: 200px;
+    max-height: 70px;
     border-right: none;
     border-bottom: 1px solid rgba(255, 0, 122, 0.3);
+    padding: 6px 10px;
+    overflow-y: hidden;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .htmlcss-level-pills {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .htmlcss-level-pill {
+    flex-shrink: 0;
+    padding: 4px 10px;
+    font-size: 0.72rem;
   }
   .htmlcss-studio-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
   .htmlcss-center-area {
-    padding: 12px;
+    padding: 8px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .htmlcss-terminal {
-    height: 100px;
+    height: 90px;
   }
   .htmlcss-modal-card {
-    width: 90%;
-    padding: 20px;
+    width: 92%;
+    padding: 18px;
   }
 }

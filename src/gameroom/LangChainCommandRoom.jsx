@@ -2270,7 +2270,7 @@ export default function LangChainCommandRoom({ onBack }) {
           </div>
 
           {/* Dual Panel IDE Studio Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, flex: 1, minHeight: 0 }}>
+          <div className="langchain-ide-grid">
             {/* Left Panel: Live Python IDE Code Canvas (app.py) */}
             <div className="langchain-step-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
               <div className="langchain-step-header">
