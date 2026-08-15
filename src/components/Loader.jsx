@@ -10,6 +10,12 @@ export default function Loader({ onComplete }) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    // Safety fallback timer — guarantee site loads within 2 seconds max
+    const fallbackTimer = setTimeout(() => {
+      if (onComplete) onComplete();
+      if (loaderRef.current) loaderRef.current.style.display = 'none';
+    }, 2000);
+
     const isMobile = typeof window !== 'undefined' && (
       'ontouchstart' in window ||
       navigator.maxTouchPoints > 0 ||
@@ -32,7 +38,7 @@ export default function Loader({ onComplete }) {
       // Timeline for progress
       gsap.to(counter, {
         value: 100,
-        duration: isMobile ? 1.6 : 1.3,
+        duration: isMobile ? 1.4 : 1.1,
         ease: 'power2.inOut',
         onUpdate: () => {
           const val = Math.round(counter.value);
@@ -42,18 +48,14 @@ export default function Loader({ onComplete }) {
           }
         },
         onComplete: () => {
-          // Notify app immediately so components render and speech triggers with 0 delay
+          clearTimeout(fallbackTimer);
           if (onComplete) onComplete();
 
-          // Final curtain reveal exit animation
           const exitTl = gsap.timeline();
-
           exitTl
             .to(loaderRef.current, {
-              scale: 1.05,
               opacity: 0,
-              filter: 'blur(10px)',
-              duration: 0.5,
+              duration: 0.4,
               ease: 'power3.in',
             })
             .to(loaderRef.current, {
@@ -63,7 +65,10 @@ export default function Loader({ onComplete }) {
       });
     });
 
-    return () => ctx.revert();
+    return () => {
+      clearTimeout(fallbackTimer);
+      ctx.revert();
+    };
   }, [onComplete]);
 
   return (

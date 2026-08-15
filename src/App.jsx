@@ -81,10 +81,14 @@ export default function App() {
     }, 100);
   };
 
+  const handleLoaderComplete = React.useCallback(() => {
+    setIsSiteLoaded(true);
+  }, []);
+
   return (
     <div style={{ position: 'relative', width: '100%', minHeight: '100vh', background: '#080914' }}>
       {/* 0. INITIAL SITE PRELOADER */}
-      {!isSiteLoaded && <Loader onComplete={() => setIsSiteLoaded(true)} />}
+      {!isSiteLoaded && <Loader onComplete={handleLoaderComplete} />}
 
       {/* Custom Mouse Follower Cursor & Particle Torch Visual Effects */}
       <CustomCursor />
