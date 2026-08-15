@@ -439,7 +439,7 @@ export default function LandingPage({ isSiteLoaded, onLaunchAI, onOpenGameRoom }
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '14px', marginBottom: '28px' }}>
             {/* 1. LangChain AI */}
             <div style={{ padding: '14px 16px', borderRadius: '14px', background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(0, 166, 126, 0.3)' }}>
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="LangChain AI" style={{ width: 32, height: 32, marginBottom: 6 }} />
+              <img src="https://api.iconify.design/logos:langchain-icon.svg" alt="LangChain AI" style={{ width: 32, height: 32, marginBottom: 6 }} />
               <h3 style={{ fontSize: '0.92rem', fontWeight: 800, color: '#00a67e', margin: '0 0 4px 0' }}>LangChain AI Studio</h3>
               <p style={{ fontSize: '0.76rem', color: '#94a3b8', margin: 0, lineHeight: 1.4 }}>
                 12 Lessons & 120 Missions with <code>init_chat_model()</code> & live <code>app.py</code> IDE canvas.
